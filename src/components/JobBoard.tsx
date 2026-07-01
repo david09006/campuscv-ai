@@ -197,10 +197,10 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
       isDarkMode ? 'text-white' : 'text-gray-900'
     }`}>
       {/* Search and Filters Header */}
-      <div className={`flex flex-col gap-8 p-8 rounded-[2.5rem] shadow-xl border transition-all ${
-        isDarkMode 
-          ? 'bg-gray-900 shadow-none border-gray-800' 
-          : 'bg-white shadow-blue-50 border-gray-200'
+      <div className={`flex flex-col gap-8 p-8 rounded-xl shadow-sm border transition-all ${
+        isDarkMode
+          ? 'bg-gray-900 shadow-none border-gray-800'
+          : 'bg-white border-gray-200'
       }`}>
         {searchError && (
           <div className={`flex items-start gap-2 rounded-2xl p-4 text-sm ${
@@ -447,10 +447,10 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: idx * 0.05 }}
-              className={`p-6 rounded-[2rem] border transition-all duration-300 group flex flex-col justify-between relative overflow-hidden ${
+              className={`p-6 rounded-xl border transition-all duration-300 group flex flex-col justify-between relative overflow-hidden ${
                 appliedJobs.includes(job.id)
-                  ? (isDarkMode ? 'border-emerald-800 bg-emerald-950/40 shadow-none' : 'border-emerald-200 bg-emerald-50 shadow-lg shadow-emerald-50')
-                  : (isDarkMode ? 'bg-gray-900 border-gray-800 shadow-none' : 'bg-white border-gray-200 hover:shadow-xl hover:shadow-blue-50 hover:-translate-y-1')
+                  ? (isDarkMode ? 'border-emerald-800 bg-emerald-950/40 shadow-none' : 'border-emerald-200 bg-emerald-50 shadow-sm')
+                  : (isDarkMode ? 'bg-gray-900 border-gray-800 shadow-none' : 'bg-white border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5')
               }`}
             >
               {appliedJobs.includes(job.id) && (
@@ -537,7 +537,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
       </div>
 
       {filteredJobs.length === 0 && (
-        <div className={`text-center py-20 rounded-[3rem] border border-dashed transition-all ${
+        <div className={`text-center py-20 rounded-xl border border-dashed transition-all ${
           isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
         }`}>
            <Search size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-4" />
