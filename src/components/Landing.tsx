@@ -39,7 +39,7 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
               {lang === 'ro' ? 'Platforma #1 pentru studenții din România' : 'The #1 platform for ambitious students'}
             </div>
             <h1 
-              className={`text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
+              className={`text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
               dangerouslySetInnerHTML={{ __html: t.landing.heroTitle }}
             />
             <p className={`text-xl mb-10 max-w-lg leading-relaxed font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -48,7 +48,7 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={onStart}
-                className="bg-primary-600 dark:bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 text-white px-10 py-5 rounded-[2rem] font-black text-lg transition-all hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3 shadow-2xl shadow-primary-500/20 dark:shadow-primary-950/40"
+                className="bg-primary-600 dark:bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 text-white px-10 py-5 rounded-lg font-bold text-lg transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 shadow-sm hover:shadow-md"
               >
                 {t.landing.ctaPrimary} <ArrowRight size={20} />
               </button>
@@ -58,10 +58,10 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
                   const { url } = await res.json();
                   window.open(url, 'linkedin_auth', 'width=600,height=600');
                 }}
-                className={`px-10 py-5 rounded-[2rem] font-bold text-lg transition-all flex items-center justify-center gap-3 active:scale-95 group ${
-                  isDarkMode 
-                    ? 'bg-gray-900 border-2 border-gray-800 text-gray-300 hover:border-primary-700 hover:bg-gray-800/50 shadow-none' 
-                    : 'bg-white border-2 border-gray-100 text-gray-700 hover:border-primary-200 hover:bg-primary-50 shadow-lg shadow-gray-100'
+                className={`px-10 py-5 rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-3 active:scale-95 group border ${
+                  isDarkMode
+                    ? 'bg-gray-900 border-gray-800 text-gray-300 hover:border-primary-700 hover:bg-gray-800/50'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-primary-200 hover:bg-primary-50 shadow-sm'
                 }`}
               >
                 <Linkedin size={22} className="text-[#0a66c2] transition-transform group-hover:scale-110" fill="#0a66c2" />
@@ -72,15 +72,12 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
 
           {/* High Fidelity Dashboard Preview */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="relative hidden lg:block"
           >
-            <div className="relative z-10 glass p-3 rounded-[3rem] shadow-2xl rotate-1">
-              <div className={`rounded-[2.2rem] overflow-hidden border aspect-[16/10] flex flex-col shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] transition-colors ${
-                isDarkMode ? 'bg-gray-950 border-gray-800 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100'
-              }`}>
+            <div className="relative z-10 rounded-xl overflow-hidden border aspect-[16/10] flex flex-col shadow-md transition-colors dark:border-gray-800 border-gray-200">
                 <div className={`h-12 border-b flex items-center px-6 justify-between transition-colors ${
                   isDarkMode ? 'border-gray-800 bg-gray-800/80' : 'border-gray-50 bg-gray-50/50'
                 }`}>
@@ -136,7 +133,6 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
                       </div>
                    </div>
                 </div>
-              </div>
             </div>
           </motion.div>
         </div>
@@ -162,8 +158,8 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className={`p-10 rounded-[3rem] border shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative group overflow-hidden ${
-                    isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200 shadow-blue-50/50'
+                  className={`p-10 rounded-xl border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 relative group overflow-hidden ${
+                    isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'
                   }`}
                 >
                   <div className={`absolute top-0 left-0 w-2 h-full bg-${step.id === '01' ? 'blue' : step.id === '02' ? 'violet' : step.id === '03' ? 'emerald' : 'amber'}-600 opacity-0 group-hover:opacity-100 transition-opacity`} />
@@ -189,8 +185,8 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
       }`}>
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
            <div className="relative order-2 md:order-1">
-              <div className="aspect-square bg-primary-600 rounded-[4rem] overflow-hidden shadow-2xl relative">
-                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center mix-blend-overlay opacity-40" />
+              <div className="aspect-square bg-primary-600 rounded-2xl overflow-hidden shadow-md relative flex items-center justify-center">
+                  <Sparkles className="text-white/20" size={180} strokeWidth={1} />
               </div>
            </div>
            
@@ -228,12 +224,9 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
       <section className={`px-4 md:px-8 py-20 transition-colors duration-300 ${
         isDarkMode ? 'bg-gray-950' : 'bg-gray-50/50'
       }`}>
-        <div className="max-w-7xl mx-auto bg-primary-600 dark:bg-primary-600 rounded-[4rem] p-16 md:p-24 text-center text-white relative overflow-hidden transition-all duration-500 shadow-2xl shadow-primary-500/20 dark:shadow-primary-950/40">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
-          
-          <h2 
-            className="text-5xl md:text-7xl font-black mb-8 tracking-tighter leading-none relative z-10"
+        <div className="max-w-7xl mx-auto bg-primary-600 dark:bg-primary-600 rounded-2xl p-16 md:p-24 text-center text-white relative overflow-hidden transition-all duration-500 shadow-md">
+          <h2
+            className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight relative z-10"
             dangerouslySetInnerHTML={{ __html: t.landing.readyTitle }}
           />
           <p className="text-primary-100 dark:text-primary-100/70 text-xl mb-12 max-w-2xl mx-auto font-medium relative z-10">
@@ -241,7 +234,7 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
           </p>
           <button 
             onClick={onStart}
-            className="bg-white text-primary-600 hover:bg-gray-50 px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-primary-950/20 transition-all hover:scale-105 active:scale-95 relative z-10"
+            className="bg-white text-primary-600 hover:bg-gray-50 px-12 py-6 rounded-lg font-bold text-xl shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-95 relative z-10"
           >
             {t.landing.ctaFinal}
           </button>
