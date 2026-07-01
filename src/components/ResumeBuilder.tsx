@@ -149,17 +149,17 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
         {/* Steps Indicator */}
         <div className="flex px-6 pt-4 gap-2">
           {steps.map((step, idx) => (
-            <div 
+            <div
               key={idx}
               className={`h-1.5 flex-1 rounded-full transition-all duration-300 relative group ${
-                idx <= currentStep 
-                  ? 'bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.4)]' 
+                idx <= currentStep
+                  ? 'bg-primary-600'
                   : (isDarkMode ? 'bg-gray-800' : 'bg-gray-200')
               }`}
             >
-              <div className={`absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-black transition-colors ${
-                idx <= currentStep 
-                  ? 'text-blue-600' 
+              <div className={`absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold transition-colors ${
+                idx <= currentStep
+                  ? 'text-primary-600'
                   : (isDarkMode ? 'text-gray-600' : 'text-gray-400')
               }`}>
                 0{idx + 1}
@@ -650,10 +650,10 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                 setCurrentStep(currentStep + 1);
               }
             }}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all ${
-              isDarkMode 
-                ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' 
-                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200'
+            className={`px-6 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 transition-all ${
+              isDarkMode
+                ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none'
+                : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md'
             }`}
           >
             {currentStep === steps.length - 1 ? t.builder.done : t.builder.continue}
