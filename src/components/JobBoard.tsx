@@ -235,10 +235,10 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               <button
                 onClick={handleFetchWebJobs}
                 disabled={isWebSearching || !searchTerm}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold shadow-lg transition-all ${
-                  isWebSearching 
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold shadow-sm transition-all ${
+                  isWebSearching
                     ? (isDarkMode ? 'bg-gray-800 text-gray-500' : 'bg-gray-100 text-gray-400')
-                    : 'bg-primary-600 text-white hover:bg-primary-700 shadow-primary-500/20 dark:shadow-none translate-y-0 active:translate-y-1'
+                    : 'bg-primary-600 text-white hover:bg-primary-700 hover:shadow-md dark:shadow-none translate-y-0 active:translate-y-1'
                 }`}
               >
                 {isWebSearching ? <Loader2 size={18} className="animate-spin" /> : <Globe size={18} />}
@@ -255,7 +255,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 onClick={() => setSelectedType(selectedType === type ? null : type)}
                 className={`px-6 py-3 rounded-xl text-sm font-bold transition-all border shadow-sm ${
                   selectedType === type 
-                    ? 'bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-500/20' 
+                    ? 'bg-primary-600 text-white border-primary-600'
                     : (isDarkMode 
                         ? 'bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700' 
                         : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-primary-300')
@@ -282,15 +282,15 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                   onClick={() => setApplicationStatus(s.id as any)}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1.5 ${
                     applicationStatus === s.id 
-                      ? (isDarkMode ? 'bg-gray-700 text-blue-400 shadow-sm' : 'bg-white text-blue-600 shadow-sm')
-                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-blue-600 hover:bg-white')
+                      ? (isDarkMode ? 'bg-gray-700 text-primary-400 shadow-sm' : 'bg-white text-primary-600 shadow-sm')
+                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-primary-600 hover:bg-white')
                   }`}
                 >
                   {s.label}
                   {s.count > 0 && (
                     <span className={`px-1.5 py-0.5 rounded-full text-[8px] transition-colors ${
                       applicationStatus === s.id
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-primary-600 text-white'
                         : (isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500')
                     }`}>
                       {s.count}
@@ -335,10 +335,10 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 onClick={() => setSelectedCompany(selectedCompany === c ? null : c)}
                 className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border ${
                   selectedCompany === c 
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-100 dark:shadow-none' 
-                    : (isDarkMode 
-                        ? 'bg-gray-800 text-gray-400 border-gray-700 hover:text-blue-400 hover:border-blue-100' 
-                        : 'bg-white text-gray-500 border-gray-200 hover:text-blue-600 hover:border-blue-300 hover:bg-gray-50')
+                    ? 'bg-primary-600 text-white border-primary-600 dark:shadow-none'
+                    : (isDarkMode
+                        ? 'bg-gray-800 text-gray-400 border-gray-700 hover:text-primary-400 hover:border-primary-100'
+                        : 'bg-white text-gray-500 border-gray-200 hover:text-primary-600 hover:border-primary-300 hover:bg-gray-50')
                 }`}
               >
                 {c}
@@ -377,8 +377,8 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                   onClick={() => setDateFilter(d.id as any)}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all ${
                     dateFilter === d.id 
-                      ? (isDarkMode ? 'bg-gray-700 text-blue-400 shadow-sm' : 'bg-white text-blue-600 shadow-sm')
-                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-blue-600 hover:bg-white')
+                      ? (isDarkMode ? 'bg-gray-700 text-primary-400 shadow-sm' : 'bg-white text-primary-600 shadow-sm')
+                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-primary-600 hover:bg-white')
                   }`}
                 >
                   {d.label}
@@ -473,7 +473,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                        {appliedJobs.includes(job.id) ? <CheckCircle2 size={24} /> : job.company.charAt(0)}
                     </div>
                     <div>
-                      <h3 className={`font-bold group-hover:text-blue-600 transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{job.title}</h3>
+                      <h3 className={`font-bold group-hover:text-primary-600 transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{job.title}</h3>
                       <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{job.company}</p>
                     </div>
                   </div>
@@ -513,7 +513,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-800 transition-colors">
                  <button 
                   onClick={() => job.url && window.open(job.url, '_blank')}
-                  className="text-blue-600 dark:text-blue-400 text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all"
+                  className="text-primary-600 dark:text-primary-400 text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all"
                  >
                    {t.jobs.detailsBtn} <ArrowUpRight size={14} />
                  </button>
@@ -523,7 +523,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                   className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
                     appliedJobs.includes(job.id)
                       ? (isDarkMode ? 'bg-emerald-900/30 text-emerald-400 font-bold' : 'bg-emerald-50 text-emerald-600 font-bold')
-                      : (isDarkMode ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200')
+                      : (isDarkMode ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md')
                   }`}
                  >
                    {appliedJobs.includes(job.id) ? (

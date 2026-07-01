@@ -504,14 +504,14 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
 
               {currentStep === 3 && (
                 <div className="space-y-6">
-                  <div className="bg-blue-600 rounded-2xl p-6 text-white overflow-hidden relative">
+                  <div className="bg-primary-600 rounded-2xl p-6 text-white overflow-hidden relative">
                     <Sparkles className="absolute top-2 right-2 opacity-20 pointer-events-none" size={100} />
                     <h3 className="text-lg font-bold mb-2">{t.builder.finalizeAI}</h3>
-                    <p className="text-blue-100 text-sm mb-4 leading-relaxed">{t.builder.finalizeAIDesc}</p>
+                    <p className="text-primary-100 text-sm mb-4 leading-relaxed">{t.builder.finalizeAIDesc}</p>
                     <button
                       onClick={handleGenerateAI}
                       disabled={isGenerating}
-                      className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition-all disabled:opacity-50"
+                      className="w-full bg-white text-primary-600 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition-all disabled:opacity-50"
                     >
                       {isGenerating ? '...' : t.builder.generateBtn}
                     </button>
@@ -534,8 +534,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                           onClick={() => setTemplate(tmpl)}
                           className={`p-4 rounded-xl border-2 text-left transition-all ${
                             template === tmpl 
-                              ? (isDarkMode ? 'border-blue-600 bg-blue-500/10 text-blue-400 shadow-md transform scale-[1.02]' : 'border-blue-600 bg-blue-50 text-blue-700 shadow-md transform scale-[1.02]') 
-                              : (isDarkMode ? 'border-gray-800 bg-gray-900 text-gray-400 hover:border-gray-700' : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-blue-300 shadow-sm transition-colors')
+                              ? (isDarkMode ? 'border-primary-600 bg-primary-500/10 text-primary-400 shadow-md transform scale-[1.02]' : 'border-primary-600 bg-primary-50 text-primary-700 shadow-md transform scale-[1.02]')
+                              : (isDarkMode ? 'border-gray-800 bg-gray-900 text-gray-400 hover:border-gray-700' : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-primary-300 shadow-sm transition-colors')
                           }`}
                         >
                           <span className="text-sm font-bold capitalize block">{tmpl}</span>
@@ -586,8 +586,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                               onClick={() => setData(prev => ({...prev, settings: {...prev.settings, fontFamily: font}}))}
                               className={`py-2 rounded-lg border text-xs font-medium transition-all ${
                                 data.settings.fontFamily === font 
-                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-blue-400 text-blue-600 shadow-sm') 
-                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-blue-200')
+                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-primary-400 text-primary-600 shadow-sm')
+                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-primary-200')
                               }`}
                             >
                                {font === 'sans' ? t.builder.fontSans : font === 'serif' ? t.builder.fontSerif : t.builder.fontMono}
@@ -606,8 +606,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                               onClick={() => setData(prev => ({...prev, settings: {...prev.settings, spacing: sp}}))}
                               className={`py-2 rounded-lg border text-xs font-medium transition-all ${
                                 data.settings.spacing === sp 
-                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-blue-400 text-blue-600 shadow-sm') 
-                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-blue-200')
+                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-primary-400 text-primary-600 shadow-sm')
+                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-primary-200')
                               }`}
                             >
                                {sp === 'compact' ? t.builder.spacingCompact : sp === 'normal' ? t.builder.spacingNormal : t.builder.spacingRelaxed}
@@ -623,7 +623,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                     className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${
                       isDarkMode 
                         ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' 
-                        : 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-100'
+                        : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md'
                     }`}
                   >
                     <Download size={20} /> {t.builder.downloadPDF}
@@ -731,7 +731,7 @@ function InputField({ label, name, value, onChange, icon: Icon, placeholder, isD
   return (
     <div className="space-y-1.5 flex-1">
       <label className={`text-[10px] font-black uppercase tracking-wider ml-1 flex items-center gap-1.5 ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>
-        {Icon && <Icon size={12} className={isDarkMode ? 'text-blue-400' : 'text-blue-600'} />} {label}
+        {Icon && <Icon size={12} className={isDarkMode ? 'text-primary-400' : 'text-primary-600'} />} {label}
       </label>
       <div className="relative group">
         <input 
@@ -756,7 +756,7 @@ function SectionHeader({ title, icon: Icon, onAdd, isDarkMode }: { title: string
     <div className="flex items-center justify-between group/header">
       <div className="flex items-center gap-2">
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center group-hover/header:rotate-6 transition-transform ${
-          isDarkMode ? 'bg-blue-900/30 text-blue-400' : 'bg-blue-50 text-blue-600'
+          isDarkMode ? 'bg-primary-900/30 text-primary-400' : 'bg-primary-50 text-primary-600'
         }`}>
           <Icon size={16} />
         </div>
@@ -769,8 +769,8 @@ function SectionHeader({ title, icon: Icon, onAdd, isDarkMode }: { title: string
           onClick={onAdd} 
           className={`p-1.5 rounded-lg transition-all shadow-md active:scale-95 ${
             isDarkMode 
-              ? 'bg-blue-600 text-white hover:bg-blue-500 shadow-blue-900/20' 
-              : 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-100'
+              ? 'bg-primary-600 text-white hover:bg-primary-500'
+              : 'bg-primary-600 text-white hover:bg-primary-700'
           }`}
         >
           <Plus size={16} />
