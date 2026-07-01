@@ -1,0 +1,6 @@
+{
+  "name": "CampusCV AI",
+  "description": "Premium AI-powered CV maker for students. Generate professional resumes, get real-time feedback, and find internship opportunities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["AI Content Generation"]
+}
