@@ -94,7 +94,7 @@ export default function App() {
           className="flex items-center gap-2 cursor-pointer group"
           onClick={() => setView('landing')}
         >
-          <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-800 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-500/20 dark:shadow-none group-hover:scale-105 transition-transform duration-200">
+          <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform duration-200">
             <FileText size={24} strokeWidth={2.5} />
           </div>
           <span className="font-bold text-xl tracking-tight hidden sm:block text-gray-900 dark:text-white">CampusCV <span className="text-primary-600">AI</span></span>
@@ -121,12 +121,12 @@ export default function App() {
         <div className="flex items-center gap-2 md:gap-4">
           {/* User Profile / Login */}
           {user ? (
-            <div className="flex items-center gap-2 bg-primary-50 dark:bg-primary-950/30 px-3 py-1.5 rounded-2xl border border-primary-100 dark:border-primary-800 group cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all">
-               <div className="w-8 h-8 bg-primary-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-110 transition-transform">
+            <div className="flex items-center gap-2 bg-primary-50 dark:bg-primary-950/30 px-3 py-1.5 rounded-lg border border-primary-100 dark:border-primary-800 group cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all">
+               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-110 transition-transform">
                  {user.name?.[0] || 'U'}
                </div>
                <div className="hidden lg:block leading-tight">
-                 <p className="text-[10px] font-black text-primary-600 dark:text-primary-400 uppercase tracking-widest">Connected</p>
+                 <p className="text-[10px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wide">Connected</p>
                  <p className="text-xs font-bold text-gray-900 dark:text-white truncate max-w-[100px]">{user.name || 'User'}</p>
                </div>
             </div>
@@ -137,7 +137,7 @@ export default function App() {
                 const { url } = await res.json();
                 window.open(url, 'linkedin_auth', 'width=600,height=600');
               }}
-              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-[#0a66c2] hover:bg-[#004182] text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-primary-500/20 dark:shadow-none active:scale-95"
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-[#0a66c2] hover:bg-[#004182] text-white rounded-lg text-xs font-bold uppercase tracking-wide transition-all shadow-sm active:scale-95"
             >
               <Briefcase size={16} fill="white" />
               Login
@@ -227,10 +227,10 @@ export default function App() {
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`hidden sm:flex px-6 py-2.5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all items-center gap-2 hover:-translate-y-0.5 active:translate-y-0 ${
-              isDarkMode 
-                ? 'bg-primary-600 hover:bg-primary-500 text-white shadow-none' 
-                : 'bg-primary-600 hover:bg-primary-700 text-white shadow-xl shadow-primary-500/20'
+            className={`hidden sm:flex px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-all items-center gap-2 hover:-translate-y-0.5 active:translate-y-0 ${
+              isDarkMode
+                ? 'bg-primary-600 hover:bg-primary-500 text-white shadow-none'
+                : 'bg-primary-600 hover:bg-primary-700 text-white shadow-sm hover:shadow-md'
             }`}
             onClick={() => setView('builder')}
           >
