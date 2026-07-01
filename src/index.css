@@ -241,7 +241,7 @@
       linear-gradient(currentColor 1px, transparent 1px),
       linear-gradient(90deg, currentColor 1px, transparent 1px);
     background-size: 40px 40px;
-    @apply text-blue-600/15 dark:text-blue-400/20;
+    @apply text-primary-600/15 dark:text-primary-400/20;
   }
 
   .gradient-text {

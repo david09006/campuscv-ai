@@ -309,8 +309,8 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               onChange={(e) => setSelectedCompany(e.target.value || null)}
               className={`border rounded-xl px-3 py-2 text-xs font-bold outline-none cursor-pointer transition-colors ${
                 isDarkMode 
-                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-blue-900/30' 
-                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-blue-100'
+                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-primary-900/30' 
+                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-primary-100'
               }`}
             >
               <option value="">{t.jobs.allCompanies}</option>
@@ -354,8 +354,8 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               onChange={(e) => setSelectedDomain(e.target.value || null)}
               className={`border rounded-xl px-3 py-2 text-xs font-bold outline-none transition-colors ${
                 isDarkMode 
-                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-blue-900/30' 
-                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-blue-100'
+                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-primary-900/30' 
+                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-primary-100'
               }`}
             >
               <option value="">{t.jobs.allDomains}</option>
@@ -551,8 +551,8 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
 function StatCard({ label, value, icon: Icon, color, bg, isDarkMode }: any) {
   return (
-    <div className={`p-5 rounded-3xl border shadow-sm transition-all hover:border-gray-300 flex items-center gap-4 ${
-      isDarkMode ? 'bg-gray-900 border-gray-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:border-gray-700' : 'bg-white border-gray-200 shadow-blue-50/50'
+    <div className={`p-5 rounded-xl border shadow-sm transition-all hover:border-gray-300 flex items-center gap-4 ${
+      isDarkMode ? 'bg-gray-900 border-gray-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:border-gray-700' : 'bg-white border-gray-200'
     }`}>
       <div className={`${bg} ${color} w-10 h-10 rounded-xl flex items-center justify-center border border-current opacity-80`}>
         <Icon size={20} />

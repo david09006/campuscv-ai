@@ -203,8 +203,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                       {data.experience.map((exp, idx) => (
                         <div key={exp.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
                           isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-blue-500' 
-                            : 'bg-white border-gray-300 hover:border-blue-500'
+                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
+                            : 'bg-white border-gray-300 hover:border-primary-500'
                         }`}>
                           <button 
                             onClick={() => removeItem('experience', idx)} 
@@ -221,8 +221,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                               <input 
                                 className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
                                   isDarkMode 
-                                    ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                    : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                    ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                    : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                                 }`} 
                                 placeholder={t.builder.company} 
                                 value={exp.company} 
@@ -231,8 +231,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                               <input 
                                 className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
                                   isDarkMode 
-                                    ? 'bg-gray-900/50 border-gray-700 text-blue-400 focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                    : 'bg-white border-gray-200 text-blue-600 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                    ? 'bg-gray-900/50 border-gray-700 text-primary-400 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                    : 'bg-white border-gray-200 text-primary-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                                 }`} 
                                 placeholder={t.builder.position} 
                                 value={exp.position} 
@@ -242,8 +242,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <textarea 
                               className={`w-full border rounded-lg px-3 py-2.5 text-xs transition-all shadow-sm outline-none resize-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               rows={3} 
                               placeholder={t.builder.descPlaceholder} 
@@ -262,8 +262,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                       {data.projects.map((proj, idx) => (
                         <div key={proj.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
                           isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-blue-500' 
-                            : 'bg-white border-gray-300 hover:border-blue-500'
+                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
+                            : 'bg-white border-gray-300 hover:border-primary-500'
                         }`}>
                            <button 
                              onClick={() => removeItem('projects', idx)} 
@@ -279,8 +279,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <input 
                               className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               placeholder={t.builder.projectName} 
                               value={proj.name} 
@@ -289,8 +289,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <input 
                               className={`w-full border rounded-lg px-3 py-2.5 text-[10px] font-mono transition-all shadow-sm outline-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-500 focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-100 text-gray-400 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-gray-500 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-100 text-gray-400 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               placeholder={t.builder.techPlaceholder} 
                               value={proj.technologies} 
@@ -299,8 +299,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <textarea 
                               className={`w-full border rounded-lg px-3 py-2.5 text-xs transition-all shadow-sm outline-none resize-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               rows={2} 
                               placeholder={t.builder.shortDesc} 
@@ -323,8 +323,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                       {data.education.map((edu, idx) => (
                         <div key={edu.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
                           isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-blue-500' 
-                            : 'bg-white border-gray-300 hover:border-blue-500'
+                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
+                            : 'bg-white border-gray-300 hover:border-primary-500'
                         }`}>
                           <button 
                             onClick={() => removeItem('education', idx)} 
@@ -340,8 +340,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <input 
                               className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               placeholder={t.builder.institution} 
                               value={edu.institution} 
@@ -350,8 +350,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                             <input 
                               className={`w-full border rounded-lg px-3 py-2.5 text-sm transition-all shadow-sm outline-none ${
                                 isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-400 focus:ring-4 focus:ring-blue-900/20 focus:border-blue-500' 
-                                  : 'bg-white border-gray-200 text-gray-500 focus:ring-4 focus:ring-blue-50/50 focus:border-blue-400'
+                                  ? 'bg-gray-900/50 border-gray-700 text-gray-400 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
+                                  : 'bg-white border-gray-200 text-gray-500 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
                               }`} 
                               placeholder={t.builder.degree} 
                               value={edu.degree} 
@@ -369,16 +369,16 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         {data.skills.map((skill, idx) => (
                           <div key={skill} className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border ${
                             isDarkMode 
-                              ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
-                              : 'bg-blue-50 text-blue-700 border-blue-100/50'
+                              ? 'bg-primary-500/10 text-primary-400 border-primary-500/20' 
+                              : 'bg-primary-50 text-primary-700 border-primary-100/50'
                           }`}>
                             {skill}
-                            <button onClick={() => setData(prev => ({...prev, skills: prev.skills.filter((_, i) => i !== idx)}))} className={isDarkMode ? 'hover:text-blue-300' : 'hover:text-blue-900'}><X size={10} /></button>
+                            <button onClick={() => setData(prev => ({...prev, skills: prev.skills.filter((_, i) => i !== idx)}))} className={isDarkMode ? 'hover:text-primary-300' : 'hover:text-primary-900'}><X size={10} /></button>
                           </div>
                         ))}
                         <input 
                           className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-blue-500' : 'border-gray-200 text-gray-900 focus:border-blue-500'
+                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
                           }`} 
                           placeholder={`+ ${t.builder.addBtn}`} 
                           onKeyDown={e => {
@@ -409,7 +409,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         ))}
                         <input 
                           className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-blue-500' : 'border-gray-200 text-gray-900 focus:border-blue-500'
+                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
                           }`} 
                           placeholder={`+ ${t.builder.addBtn}`} 
                           onKeyDown={e => {
@@ -440,7 +440,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         ))}
                         <input 
                           className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-blue-500' : 'border-gray-200 text-gray-900 focus:border-blue-500'
+                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
                           }`} 
                           placeholder={`+ ${t.builder.addBtn}`} 
                           onKeyDown={e => {
@@ -477,8 +477,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                                <input 
                                  className={`w-full border rounded-lg px-2 py-1.5 text-xs font-bold transition-all outline-none ${
                                    isDarkMode 
-                                     ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-2 focus:ring-blue-900/40' 
-                                     : 'bg-white border-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-100'
+                                     ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-2 focus:ring-primary-900/40' 
+                                     : 'bg-white border-gray-200 text-gray-900 focus:ring-2 focus:ring-primary-100'
                                  }`} 
                                  placeholder={t.builder.languageName} 
                                  value={lang.language} 
@@ -487,8 +487,8 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                                <input 
                                  className={`w-full border rounded-lg px-2 py-1.5 text-xs font-bold transition-all outline-none ${
                                    isDarkMode 
-                                     ? 'bg-gray-900/50 border-gray-700 text-blue-400 focus:ring-2 focus:ring-blue-900/40' 
-                                     : 'bg-white border-gray-200 text-blue-600 focus:ring-2 focus:ring-blue-100'
+                                     ? 'bg-gray-900/50 border-gray-700 text-primary-400 focus:ring-2 focus:ring-primary-900/40' 
+                                     : 'bg-white border-gray-200 text-primary-600 focus:ring-2 focus:ring-primary-100'
                                  }`} 
                                  placeholder={t.builder.proficiency} 
                                  value={lang.level} 
@@ -742,8 +742,8 @@ function InputField({ label, name, value, onChange, icon: Icon, placeholder, isD
           placeholder={placeholder}
           className={`w-full border rounded-xl px-4 py-3.5 text-sm outline-none transition-all font-medium shadow-sm ${
             isDarkMode 
-              ? 'bg-gray-950 border-gray-800 text-white focus:ring-blue-500/20 focus:border-blue-500 placeholder:text-gray-600' 
-              : 'bg-white border-gray-300 text-gray-900 focus:ring-blue-100 focus:border-blue-500 placeholder:text-gray-400 hover:border-blue-400'
+              ? 'bg-gray-950 border-gray-800 text-white focus:ring-primary-500/20 focus:border-primary-500 placeholder:text-gray-600' 
+              : 'bg-white border-gray-300 text-gray-900 focus:ring-primary-100 focus:border-primary-500 placeholder:text-gray-400 hover:border-primary-400'
           }`}
         />
       </div>
