@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, FileText, Briefcase, User, Bell, ChevronLeft, ChevronRight, Menu, X, Globe, Sun, Moon, Palette } from 'lucide-react';
+import { Layout, FileText, Briefcase, User, Bell, ChevronLeft, ChevronRight, Menu, X, Globe, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ResumeBuilder from './components/ResumeBuilder';
 import JobBoard from './components/JobBoard';
@@ -32,19 +32,6 @@ export default function App() {
     }
     return false;
   });
-
-  const [appColorPalette, setAppColorPalette] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('appPalette');
-      return saved || 'classic';
-    }
-    return 'classic';
-  });
-
-  const changePalette = (palette: string) => {
-    setAppColorPalette(palette);
-    localStorage.setItem('appPalette', palette);
-  };
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -85,19 +72,14 @@ export default function App() {
   const currentNav = navigation.find(n => n.id === view);
 
   return (
-    <div className={`theme-${appColorPalette} min-h-screen transition-colors duration-300 flex flex-col ${isDarkMode ? 'dark bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className="min-h-screen bg-background text-ink flex flex-col transition-colors duration-300">
       {/* Navigation Header */}
-      <header className={`sticky top-0 z-50 backdrop-blur-md border-b px-4 md:px-8 h-16 flex items-center justify-between transition-all ${
-        isDarkMode ? 'bg-gray-900/80 border-gray-800' : 'bg-white/80 border-gray-200 shadow-sm'
-      }`}>
-        <div 
-          className="flex items-center gap-2 cursor-pointer group"
+      <header className="sticky top-0 z-50 h-16 flex items-center justify-between border-b border-border bg-surface px-4 md:px-8">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
           onClick={() => setView('landing')}
         >
-          <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform duration-200">
-            <FileText size={24} strokeWidth={2.5} />
-          </div>
-          <span className="font-bold text-xl tracking-tight hidden sm:block text-gray-900 dark:text-white">CampusCV <span className="text-primary-600">AI</span></span>
+          <span className="font-display text-[21px] font-semibold tracking-tight text-ink">CampusCV<span className="text-accent">.</span></span>
         </div>
 
         {/* Desktop Nav */}
@@ -106,14 +88,13 @@ export default function App() {
             <button
               key={nav.id}
               onClick={() => setView(nav.id as View)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
-                view === nav.id 
-                  ? (isDarkMode ? 'bg-primary-950/40 text-primary-400 border border-primary-900/30' : 'bg-primary-50 text-primary-700')
-                  : (isDarkMode ? 'text-gray-400 hover:bg-gray-800 hover:text-gray-200' : 'text-gray-500 hover:bg-primary-50 hover:text-primary-600')
+              className={`relative flex items-center gap-2 px-3 h-16 text-sm font-medium transition-colors cursor-pointer ${
+                view === nav.id ? 'text-ink' : 'text-muted hover:text-ink'
               }`}
             >
-              <nav.icon size={18} />
+              <nav.icon size={16} />
               {nav.label}
+              {view === nav.id && <span className="absolute inset-x-3 bottom-0 h-0.5 bg-accent" />}
             </button>
           ))}
         </nav>
@@ -121,63 +102,33 @@ export default function App() {
         <div className="flex items-center gap-2 md:gap-4">
           {/* User Profile / Login */}
           {user ? (
-            <div className="flex items-center gap-2 bg-primary-50 dark:bg-primary-950/30 px-3 py-1.5 rounded-lg border border-primary-100 dark:border-primary-800 group cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all">
-               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-110 transition-transform">
+            <div className="flex items-center gap-2 rounded-control border border-border bg-surface px-2.5 py-1.5">
+               <div className="h-8 w-8 rounded-full bg-accent text-accent-contrast flex items-center justify-center text-sm font-semibold">
                  {user.name?.[0] || 'U'}
                </div>
                <div className="hidden lg:block leading-tight">
-                 <p className="text-[10px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-wide">Connected</p>
-                 <p className="text-xs font-bold text-gray-900 dark:text-white truncate max-w-[100px]">{user.name || 'User'}</p>
+                 <p className="text-xs font-medium uppercase tracking-[0.08em] text-muted">Connected</p>
+                 <p className="text-xs font-medium text-ink truncate max-w-[100px]">{user.name || 'User'}</p>
                </div>
             </div>
           ) : (
-            <button 
+            <button
               onClick={async () => {
                 const res = await fetch('/api/auth/linkedin/url');
                 const { url } = await res.json();
                 window.open(url, 'linkedin_auth', 'width=600,height=600');
               }}
-              className="hidden lg:flex items-center gap-2 px-5 py-2.5 bg-[#0a66c2] hover:bg-[#004182] text-white rounded-lg text-xs font-bold uppercase tracking-wide transition-all shadow-sm active:scale-95"
+              className="hidden lg:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control border border-border bg-surface text-ink text-sm font-medium cursor-pointer transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
             >
-              <Briefcase size={16} fill="white" />
+              <Briefcase size={16} className="text-[#0a66c2]" fill="#0a66c2" />
               Login
             </button>
           )}
 
-          {/* Platform Theme Palette Selector */}
-          <div className="hidden xl:flex items-center gap-1 p-1 rounded-xl border bg-gray-100/80 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 shadow-sm">
-            {(['classic', 'emerald', 'sunset', 'amethyst', 'crimson', 'cyber'] as const).map((p) => {
-              const colorsMap: Record<string, string> = {
-                classic: 'bg-blue-500',
-                emerald: 'bg-emerald-500',
-                sunset: 'bg-orange-500',
-                amethyst: 'bg-purple-500',
-                crimson: 'bg-rose-500',
-                cyber: 'bg-teal-500',
-              };
-              return (
-                <button
-                  key={p}
-                  onClick={() => changePalette(p)}
-                  className={`w-4.5 h-4.5 rounded-full ${colorsMap[p]} transition-all relative ${
-                    appColorPalette === p 
-                      ? 'ring-2 ring-offset-1 ring-gray-900 dark:ring-white scale-110 shadow-sm' 
-                      : 'hover:scale-105 opacity-80 hover:opacity-100'
-                  }`}
-                  title={`Palette: ${p.toUpperCase()}`}
-                >
-                  {appColorPalette === p && (
-                    <span className="absolute inset-0 flex items-center justify-center text-[7px] text-white font-black">✓</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
           {/* Theme Toggle */}
-          <button 
+          <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2.5 text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-gray-800 rounded-xl transition-all border border-transparent hover:border-primary-100 dark:hover:border-gray-700"
+            className="flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             title={isDarkMode ? "Light Mode" : "Dark Mode"}
           >
             <motion.div
@@ -190,17 +141,13 @@ export default function App() {
           </button>
 
           {/* Language Switcher */}
-          <div className={`flex items-center gap-1 p-1 rounded-xl border backdrop-blur-sm transition-colors ${
-            isDarkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-100/80 border-gray-200'
-          }`}>
+          <div className="flex items-center gap-0.5 rounded-control border border-border bg-background p-0.5">
             {(['en', 'ro', 'fr', 'de'] as Language[]).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
-                  lang === l 
-                    ? (isDarkMode ? 'bg-gray-700 text-primary-400 shadow-sm' : 'bg-white text-primary-600 shadow-sm')
-                    : (isDarkMode ? 'text-gray-500 hover:text-gray-300 hover:bg-gray-700' : 'text-gray-400 hover:text-primary-600 hover:bg-white')
+                className={`h-8 px-2.5 rounded-[4px] text-xs font-medium uppercase transition-colors cursor-pointer ${
+                  lang === l ? 'bg-surface text-ink shadow-card' : 'text-muted hover:text-ink'
                 }`}
               >
                 {l}
@@ -208,30 +155,21 @@ export default function App() {
             ))}
           </div>
 
-          <button className={`relative p-2.5 rounded-xl transition-all border border-transparent ${
-            isDarkMode 
-              ? 'text-gray-400 hover:text-gray-300 hover:bg-gray-800 hover:border-gray-700' 
-              : 'text-gray-500 hover:text-primary-600 hover:bg-gray-100 hover:border-gray-200 shadow-sm'
-          }`}>
+          <button className="relative flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
             <Bell size={20} />
-            <span className={`absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 ${isDarkMode ? 'border-gray-900' : 'border-white'}`}></span>
+            <span className="absolute top-2 right-2 w-2 h-2 bg-clay rounded-full border-2 border-surface"></span>
           </button>
-          
-          <button 
-            className="md:hidden p-2 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
+
+          <button
+            className="md:hidden flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`hidden sm:flex px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-wide transition-all items-center gap-2 hover:-translate-y-0.5 active:translate-y-0 ${
-              isDarkMode
-                ? 'bg-primary-600 hover:bg-primary-500 text-white shadow-none'
-                : 'bg-primary-600 hover:bg-primary-700 text-white shadow-sm hover:shadow-md'
-            }`}
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
             onClick={() => setView('builder')}
           >
             {t.nav.newCV}
@@ -246,9 +184,7 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`md:hidden fixed inset-x-0 top-16 z-40 p-4 shadow-xl border-b transition-colors ${
-              isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'
-            }`}
+            className="md:hidden fixed inset-x-0 top-16 z-40 p-4 bg-surface border-b border-border shadow-overlay"
           >
             <div className="flex flex-col gap-2">
               {navigation.map((nav) => (
@@ -258,10 +194,10 @@ export default function App() {
                     setView(nav.id as View);
                     setIsMenuOpen(false);
                   }}
-                  className={`flex items-center gap-3 p-3 rounded-xl text-base font-semibold transition-all ${
-                    view === nav.id 
-                      ? 'bg-primary-50 dark:bg-primary-950/30 text-primary-700 dark:text-primary-400' 
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  className={`flex items-center gap-3 rounded-control p-3 text-base font-medium cursor-pointer ${
+                    view === nav.id
+                      ? 'bg-accent-tint text-accent'
+                      : 'text-muted hover:bg-background hover:text-ink'
                   }`}
                 >
                   <nav.icon size={20} />
@@ -278,14 +214,10 @@ export default function App() {
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={view}
-            initial={{ opacity: 0, y: 12, scale: 0.995 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 1.005 }}
-            transition={{ 
-              duration: 0.3, 
-              ease: [0.4, 0, 0.2, 1], // Standard Material-style ease
-              opacity: { duration: 0.2 } 
-            }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="flex-1 overflow-auto"
           >
             {view === 'landing' && <Landing onStart={() => setView('builder')} lang={lang} isDarkMode={isDarkMode} />}
@@ -293,35 +225,26 @@ export default function App() {
             {view === 'jobs' && <JobBoard lang={lang} isDarkMode={isDarkMode} />}
             {view === 'profile' && (
               <div className="flex flex-col items-center justify-center p-12 text-center h-full">
-                <div className={`w-20 h-20 rounded-full flex items-center justify-center text-gray-400 mb-4 transition-colors ${
-                  isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
-                }`}>
-                  <User size={40} />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-tint text-accent">
+                  <User size={28} />
                 </div>
-                <h2 className={`text-2xl font-bold tracking-tight transition-colors ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>{t.nav.profile}</h2>
-                <p className="text-gray-500 dark:text-gray-400 max-w-sm mt-2">Section in development.</p>
+                <h2 className="font-display text-[26px] font-medium text-ink mt-5">{t.nav.profile}</h2>
+                <p className="text-muted mt-2 max-w-sm">Section in development.</p>
               </div>
             )}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      <footer className={`transition-colors py-8 px-4 md:px-8 border-t ${
-        isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'
-      }`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
+      <footer className="border-t border-border bg-surface py-10 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-primary-600 rounded flex items-center justify-center text-white">
-              <FileText size={14} />
-            </div>
-            <span className="font-bold text-gray-900 dark:text-white">CampusCV AI</span>
+            <span className="font-display text-base font-semibold tracking-tight text-ink">CampusCV<span className="text-accent">.</span></span>
           </div>
-          <p className="dark:text-gray-400">© 2026 CampusCV AI - Construit pentru studenții din România.</p>
+          <p>© 2026 CampusCV AI - Construit pentru studenții din România.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-primary-600 transition-colors">Politica de Confidențialitate</a>
-            <a href="#" className="hover:text-primary-600 transition-colors">Termeni și Condiții</a>
+            <a href="#" className="hover:text-accent transition-colors">Politica de Confidențialitate</a>
+            <a href="#" className="hover:text-accent transition-colors">Termeni și Condiții</a>
           </div>
         </div>
       </footer>
