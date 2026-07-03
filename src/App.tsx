@@ -75,12 +75,13 @@ export default function App() {
     <div className="min-h-screen bg-background text-ink flex flex-col transition-colors duration-300">
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 h-16 flex items-center justify-between border-b border-border bg-surface px-4 md:px-8">
-        <div
-          className="flex items-center gap-2 cursor-pointer"
+        <button
+          type="button"
+          className="flex items-center gap-2 cursor-pointer text-left bg-transparent border-0 p-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent rounded-control"
           onClick={() => setView('landing')}
         >
           <span className="font-display text-[21px] font-semibold tracking-tight text-ink">CampusCV<span className="text-accent">.</span></span>
-        </div>
+        </button>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
@@ -88,7 +89,7 @@ export default function App() {
             <button
               key={nav.id}
               onClick={() => setView(nav.id as View)}
-              className={`relative flex items-center gap-2 px-3 h-16 text-sm font-medium transition-colors cursor-pointer ${
+              className={`relative flex items-center gap-2 px-3 h-16 text-sm font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${
                 view === nav.id ? 'text-ink' : 'text-muted hover:text-ink'
               }`}
             >
@@ -118,7 +119,7 @@ export default function App() {
                 const { url } = await res.json();
                 window.open(url, 'linkedin_auth', 'width=600,height=600');
               }}
-              className="hidden lg:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control border border-border bg-surface text-ink text-sm font-medium cursor-pointer transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
+              className="hidden lg:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control border border-border bg-surface text-ink text-sm font-medium cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
             >
               <Briefcase size={16} className="text-[#0a66c2]" fill="#0a66c2" />
               Login
@@ -128,7 +129,7 @@ export default function App() {
           {/* Theme Toggle */}
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             title={isDarkMode ? "Light Mode" : "Dark Mode"}
           >
             <motion.div
@@ -146,7 +147,7 @@ export default function App() {
               <button
                 key={l}
                 onClick={() => setLang(l)}
-                className={`h-8 px-2.5 rounded-[4px] text-xs font-medium uppercase transition-colors cursor-pointer ${
+                className={`h-8 px-2.5 rounded-[4px] text-xs font-medium uppercase transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                   lang === l ? 'bg-surface text-ink shadow-card' : 'text-muted hover:text-ink'
                 }`}
               >
@@ -155,13 +156,13 @@ export default function App() {
             ))}
           </div>
 
-          <button className="relative flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+          <button className="relative flex h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
             <Bell size={20} />
             <span className="absolute top-2 right-2 w-2 h-2 bg-clay rounded-full border-2 border-surface"></span>
           </button>
 
           <button
-            className="md:hidden flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="md:hidden flex h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -169,7 +170,7 @@ export default function App() {
 
           <motion.button
             whileTap={{ scale: 0.98 }}
-            className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
+            className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
             onClick={() => setView('builder')}
           >
             {t.nav.newCV}
@@ -194,7 +195,7 @@ export default function App() {
                     setView(nav.id as View);
                     setIsMenuOpen(false);
                   }}
-                  className={`flex items-center gap-3 rounded-control p-3 text-base font-medium cursor-pointer ${
+                  className={`flex items-center gap-3 rounded-control p-3 text-base font-medium cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                     view === nav.id
                       ? 'bg-accent-tint text-accent'
                       : 'text-muted hover:bg-background hover:text-ink'
