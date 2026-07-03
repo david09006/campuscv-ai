@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, FileText, Briefcase, User, Bell, ChevronLeft, ChevronRight, Menu, X, Globe, Sun, Moon } from 'lucide-react';
+import { Layout, FileText, Briefcase, User, Bell, ChevronLeft, ChevronRight, Menu, X, Globe, Sun, Moon, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ResumeBuilder from './components/ResumeBuilder';
 import JobBoard from './components/JobBoard';
@@ -121,7 +121,7 @@ export default function App() {
               }}
               className="hidden lg:inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control border border-border bg-surface text-ink text-sm font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
             >
-              <Briefcase size={16} className="text-[#0a66c2]" fill="#0a66c2" />
+              <Linkedin size={16} className="text-[#0a66c2]" fill="#0a66c2" />
               Login
             </button>
           )}
@@ -142,7 +142,7 @@ export default function App() {
           </button>
 
           {/* Language Switcher */}
-          <div className="flex items-center gap-0.5 rounded-control border border-border bg-background p-0.5">
+          <div className="hidden sm:flex items-center gap-0.5 rounded-control border border-border bg-background p-0.5">
             {(['en', 'ro', 'fr', 'de'] as Language[]).map((l) => (
               <button
                 key={l}
@@ -156,7 +156,7 @@ export default function App() {
             ))}
           </div>
 
-          <button className="relative flex h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+          <button className="hidden sm:flex relative h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-accent-tint hover:text-ink cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
             <Bell size={20} />
             <span className="absolute top-2 right-2 w-2 h-2 bg-clay rounded-full border-2 border-surface"></span>
           </button>
@@ -206,6 +206,19 @@ export default function App() {
                   {nav.label}
                 </button>
               ))}
+              <div className="mt-2 pt-3 border-t border-border flex items-center gap-0.5">
+                {(['en', 'ro', 'fr', 'de'] as Language[]).map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={`flex-1 h-8 px-2.5 rounded-[4px] text-xs font-medium uppercase transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                      lang === l ? 'bg-surface text-ink shadow-card' : 'text-muted hover:text-ink'
+                    }`}
+                  >
+                    {l}
+                  </button>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

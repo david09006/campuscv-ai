@@ -203,17 +203,17 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
 
       {/* CTA Final */}
       <section className="bg-background px-4 md:px-8 py-20 md:py-24">
-        <div className="max-w-7xl mx-auto rounded-panel bg-accent px-8 py-16 md:px-20 md:py-20 text-center">
+        <div className="max-w-7xl mx-auto rounded-panel bg-accent dark:bg-accent-tint px-8 py-16 md:px-20 md:py-20 text-center">
           <h2
-            className="font-display text-[33px] md:text-[42px] font-medium tracking-tight text-accent-contrast leading-tight mb-5"
+            className="font-display text-[33px] md:text-[42px] font-medium tracking-tight text-accent-contrast dark:text-ink leading-tight mb-5"
             dangerouslySetInnerHTML={{ __html: t.landing.readyTitle }}
           />
-          <p className="text-accent-contrast/80 text-lg max-w-2xl mx-auto mb-10">
+          <p className="text-accent-contrast/80 dark:text-muted text-lg max-w-2xl mx-auto mb-10">
             {t.landing.readyDesc}
           </p>
           <button
             onClick={onStart}
-            className="inline-flex h-12 items-center justify-center rounded-control bg-surface px-8 text-base font-semibold text-ink transition-colors hover:bg-background cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-contrast active:translate-y-px"
+            className="inline-flex h-12 items-center justify-center rounded-control bg-surface px-8 text-base font-semibold text-ink transition-colors hover:bg-background dark:bg-accent dark:text-accent-contrast dark:hover:bg-accent-hover cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-contrast dark:focus-visible:outline-ink active:translate-y-px"
           >
             {t.landing.ctaFinal}
           </button>
