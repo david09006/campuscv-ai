@@ -119,7 +119,7 @@ export default function App() {
                 const { url } = await res.json();
                 window.open(url, 'linkedin_auth', 'width=600,height=600');
               }}
-              className="hidden lg:inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control border border-border bg-surface text-ink text-sm font-medium cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
+              className="hidden lg:inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control border border-border bg-surface text-ink text-sm font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
             >
               <Briefcase size={16} className="text-[#0a66c2]" fill="#0a66c2" />
               Login
@@ -135,7 +135,7 @@ export default function App() {
             <motion.div
               initial={false}
               animate={{ rotate: isDarkMode ? 180 : 0 }}
-              whileTap={{ scale: 0.8, rotate: isDarkMode ? 270 : -90 }}
+              whileTap={{ scale: 0.98, rotate: isDarkMode ? 270 : -90 }}
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </motion.div>
@@ -170,7 +170,7 @@ export default function App() {
 
           <motion.button
             whileTap={{ scale: 0.98 }}
-            className="hidden sm:inline-flex items-center justify-center gap-2 h-10 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
+            className="hidden sm:inline-flex items-center justify-center gap-2 h-11 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
             onClick={() => setView('builder')}
           >
             {t.nav.newCV}
@@ -185,6 +185,7 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="md:hidden fixed inset-x-0 top-16 z-40 p-4 bg-surface border-b border-border shadow-overlay"
           >
             <div className="flex flex-col gap-2">

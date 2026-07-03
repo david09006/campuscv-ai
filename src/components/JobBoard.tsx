@@ -291,7 +291,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
             <select
               value={selectedCompany || ''}
               onChange={(e) => setSelectedCompany(e.target.value || null)}
-              className="h-10 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
+              className="h-11 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
             >
               <option value="">{t.jobs.allCompanies}</option>
               <optgroup label={t.jobs.popularCompanies}>
@@ -330,7 +330,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
             <select
               value={selectedDomain || ''}
               onChange={(e) => setSelectedDomain(e.target.value || null)}
-              className="h-10 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
+              className="h-11 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
             >
               <option value="">{t.jobs.allDomains}</option>
               {domains.map(d => <option key={d} value={d}>{d}</option>)}
@@ -380,6 +380,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
             <motion.button
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
               onClick={() => {
                 setSearchTerm('');
                 setSelectedType(null);
@@ -475,14 +476,14 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                    <button
                     onClick={() => job.url && window.open(job.url, '_blank')}
-                    className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control border border-border bg-surface text-ink text-sm font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control border border-border bg-surface text-ink text-sm font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
                    >
                      {t.jobs.detailsBtn} <ArrowUpRight size={14} />
                    </button>
                    <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleApply(job.id, job.url)}
-                    className={`inline-flex items-center justify-center gap-2 h-10 px-4 rounded-control text-sm font-semibold cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px ${
+                    className={`inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control text-sm font-semibold cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px ${
                       applied
                         ? 'border border-accent/30 bg-accent-tint text-accent'
                         : 'bg-accent text-accent-contrast hover:bg-accent-hover'
