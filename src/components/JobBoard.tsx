@@ -364,7 +364,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
           {/* Remote Toggle */}
           <button
             onClick={() => setRemoteOnly(!remoteOnly)}
-            className={`flex items-center gap-2 h-9 px-3 rounded-control border transition-colors text-xs font-medium cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+            className={`flex items-center gap-2 h-11 px-4 rounded-control border transition-colors text-xs font-medium cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
               remoteOnly
                 ? 'border-accent/30 bg-accent-tint text-accent'
                 : 'border-border bg-surface text-muted hover:border-accent/40 hover:text-ink'
@@ -389,7 +389,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 setDateFilter('all');
                 setApplicationStatus('all');
               }}
-              className="flex items-center gap-2 h-9 px-3 rounded-control text-xs font-medium text-muted transition-colors ml-auto cursor-pointer hover:text-destructive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="flex items-center gap-2 h-11 px-4 rounded-control text-xs font-medium text-muted transition-colors ml-auto cursor-pointer hover:text-destructive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <History size={14} className="rotate-180" />
               {t.jobs.resetFilters}
