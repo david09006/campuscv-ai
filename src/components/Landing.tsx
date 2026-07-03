@@ -20,9 +20,9 @@ export default function Landing({ onStart, lang, isDarkMode }: LandingProps) {
       <section className="border-b border-border bg-surface px-4 md:px-8 py-16 md:py-28">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
           >
             <p className="text-xs font-medium uppercase tracking-[0.08em] text-clay-text mb-6">
               {lang === 'ro' ? 'Platforma #1 pentru studenții din România' : 'The #1 platform for ambitious students'}
