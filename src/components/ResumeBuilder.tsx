@@ -198,7 +198,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         <div key={exp.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
                           <button
                             onClick={() => removeItem('experience', idx)}
-                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -243,7 +243,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         <div key={proj.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
                            <button
                              onClick={() => removeItem('projects', idx)}
-                             className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                             className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                            >
                             <Trash2 size={14} />
                           </button>
@@ -290,7 +290,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         <div key={edu.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
                           <button
                             onClick={() => removeItem('education', idx)}
-                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -401,7 +401,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                            <div key={lang.id} className="rounded-card border border-border bg-background p-4 relative group flex gap-3 items-center">
                              <button
                                onClick={() => removeItem('languages', idx)}
-                               className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                               className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                              >
                                 <Trash2 size={12} />
                              </button>
@@ -428,13 +428,13 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
 
               {currentStep === 3 && (
                 <div className="space-y-6">
-                  <div className="rounded-panel bg-accent p-6">
-                    <h3 className="font-display text-[18px] font-medium text-accent-contrast mb-1.5">{t.builder.finalizeAI}</h3>
-                    <p className="text-sm text-accent-contrast/80 leading-relaxed mb-5">{t.builder.finalizeAIDesc}</p>
+                  <div className="rounded-panel bg-accent dark:bg-accent-tint p-6">
+                    <h3 className="font-display text-[18px] font-medium text-accent-contrast dark:text-ink mb-1.5">{t.builder.finalizeAI}</h3>
+                    <p className="text-sm text-accent-contrast/80 dark:text-muted leading-relaxed mb-5">{t.builder.finalizeAIDesc}</p>
                     <button
                       onClick={handleGenerateAI}
                       disabled={isGenerating}
-                      className="flex w-full h-11 items-center justify-center gap-2 rounded-control bg-surface text-sm font-semibold text-ink transition-colors hover:bg-background disabled:opacity-60 disabled:pointer-events-none cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-contrast"
+                      className="flex w-full h-11 items-center justify-center gap-2 rounded-control bg-surface text-sm font-semibold text-ink transition-colors hover:bg-background disabled:opacity-60 disabled:pointer-events-none cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-contrast dark:focus-visible:outline-ink"
                     >
                       {isGenerating ? (
                         <>
@@ -468,7 +468,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                           }`}
                         >
                           <span className={`text-sm capitalize block ${template === tmpl ? 'font-semibold text-accent' : 'font-medium text-ink'}`}>{tmpl}</span>
-                          <span className="text-[11px] text-muted mt-0.5">
+                          <span className="text-[11px] text-muted mt-0.5 block">
                             {tmpl === 'europass' || tmpl === 'corporate' ? 'Format Oficial' : tmpl === 'tech' ? 'Developer' : tmpl === 'academic' ? 'Times / Serif' : tmpl === 'creative' ? 'Modern 2-Col' : tmpl === 'retro' ? 'Vintage Warm' : 'Design optimizat'}
                           </span>
                         </button>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Layout, FileText, Briefcase, User, Bell, ChevronLeft, ChevronRight, Menu, X, Globe, Sun, Moon, Linkedin } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, MotionConfig } from 'motion/react';
 import ResumeBuilder from './components/ResumeBuilder';
 import JobBoard from './components/JobBoard';
 import Landing from './components/Landing';
@@ -72,6 +72,7 @@ export default function App() {
   const currentNav = navigation.find(n => n.id === view);
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-background text-ink flex flex-col transition-colors duration-300">
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 h-16 flex items-center justify-between border-b border-border bg-surface px-4 md:px-8">
@@ -264,6 +265,7 @@ export default function App() {
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }
 
