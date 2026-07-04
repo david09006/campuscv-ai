@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, MapPin, Filter, Star, Zap, Building2, Calendar, ArrowUpRight, CheckCircle2, History, Globe, Loader2, ExternalLink, AlertCircle } from 'lucide-react';
+import { Search, MapPin, Filter, Star, Zap, Building2, Calendar, ArrowUpRight, CheckCircle2, History, Globe, Loader2, ExternalLink, AlertCircle, Briefcase } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { searchExternalJobs } from '../lib/gemini';
 import { Language, TRANSLATIONS } from '../lib/i18n';
 import { Job } from '../types';
@@ -76,6 +77,7 @@ const INITIAL_JOBS: Job[] = [
 ];
 
 export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: Language, isDarkMode?: boolean }) {
+  // isDarkMode retained for signature compatibility; dark mode now handled via CSS tokens.
   const [jobs, setJobs] = useState<Job[]>(INITIAL_JOBS);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -129,11 +131,11 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
   const companies = Array.from(new Set(jobs.map(j => j.company))).sort((a, b) => {
     const aIndex = POPULAR_COMPANIES.indexOf(a);
     const bIndex = POPULAR_COMPANIES.indexOf(b);
-    
+
     const aPop = aIndex !== -1;
     const bPop = bIndex !== -1;
-    
-    if (aPop && bPop) return aIndex - bIndex; 
+
+    if (aPop && bPop) return aIndex - bIndex;
     if (aPop && !bPop) return -1;
     if (!aPop && bPop) return 1;
     return a.localeCompare(b);
@@ -141,21 +143,21 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
   const filteredJobs = jobs.filter(job => {
     const isApplied = appliedJobs.includes(job.id);
-    const matchesApplied = applicationStatus === 'all' || 
+    const matchesApplied = applicationStatus === 'all' ||
                           (applicationStatus === 'applied' && isApplied) ||
                           (applicationStatus === 'not_applied' && !isApplied);
-    
-    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+
+    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           job.company.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = !selectedType || job.type === selectedType;
     const matchesDomain = !selectedDomain || job.domain === selectedDomain;
     const matchesCompany = !selectedCompany || job.company === selectedCompany;
     const matchesRemote = !remoteOnly || job.remote;
-    
+
     const now = new Date();
     const jobDate = new Date(job.postedAt);
     const diffHours = (now.getTime() - jobDate.getTime()) / (1000 * 60 * 60);
-    
+
     let matchesDate = true;
     if (dateFilter === 'today') matchesDate = diffHours <= 24;
     else if (dateFilter === 'week') matchesDate = diffHours <= 168;
@@ -193,39 +195,27 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
   };
 
   return (
-    <div className={`max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-10 grid-bg min-h-full transition-colors ${
-      isDarkMode ? 'text-white' : 'text-gray-900'
-    }`}>
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-8 min-h-full bg-background text-ink">
       {/* Search and Filters Header */}
-      <div className={`flex flex-col gap-8 p-8 rounded-xl shadow-sm border transition-all ${
-        isDarkMode
-          ? 'bg-gray-900 shadow-none border-gray-800'
-          : 'bg-white border-gray-200'
-      }`}>
+      <div className="flex flex-col gap-6 rounded-panel border border-border bg-surface p-6 md:p-8">
         {searchError && (
-          <div className={`flex items-start gap-2 rounded-2xl p-4 text-sm ${
-            isDarkMode ? 'bg-red-950/40 text-red-300 border border-red-900/50' : 'bg-red-50 text-red-700 border border-red-100'
-          }`}>
+          <div className="flex items-start gap-2 rounded-card border border-destructive/30 bg-destructive-tint p-3 text-sm text-destructive">
             <AlertCircle size={16} className="shrink-0 mt-0.5" />
             <span>{searchError}</span>
           </div>
         )}
         <div className="flex flex-col md:flex-row gap-6 items-end justify-between">
           <div className="w-full md:max-w-md space-y-2">
-            <h2 className={`text-3xl font-black tracking-tighter ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.jobs.title}</h2>
-            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>{t.jobs.desc}</p>
+            <h2 className="font-display text-[26px] md:text-[33px] font-medium tracking-tight text-ink">{t.jobs.title}</h2>
+            <p className="text-sm text-muted">{t.jobs.desc}</p>
             <div className="relative mt-4">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <input 
-                type="text" 
-                placeholder={t.jobs.searchPlaceholder} 
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" size={18} />
+              <input
+                type="text"
+                placeholder={t.jobs.searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-12 pr-4 py-4 rounded-2xl outline-none transition-all placeholder:text-gray-400 text-sm font-medium shadow-inner border-2 ${
-                  isDarkMode 
-                    ? 'bg-gray-800 border-gray-700 text-white focus:ring-primary-900/30 focus:bg-gray-900 focus:border-primary-500' 
-                    : 'bg-white border-gray-200 text-gray-900 focus:ring-primary-100 focus:bg-white focus:border-primary-500'
-                }`}
+                className="w-full h-12 pl-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
               />
             </div>
           </div>
@@ -235,30 +225,24 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
               <button
                 onClick={handleFetchWebJobs}
                 disabled={isWebSearching || !searchTerm}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold shadow-sm transition-all ${
-                  isWebSearching
-                    ? (isDarkMode ? 'bg-gray-800 text-gray-500' : 'bg-gray-100 text-gray-400')
-                    : 'bg-primary-600 text-white hover:bg-primary-700 hover:shadow-md dark:shadow-none translate-y-0 active:translate-y-1'
-                }`}
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px disabled:opacity-50 disabled:pointer-events-none"
               >
                 {isWebSearching ? <Loader2 size={18} className="animate-spin" /> : <Globe size={18} />}
                 {isWebSearching ? t.jobs.searchingWeb : t.jobs.searchExternal}
               </button>
               <div className="flex items-center gap-1.5 px-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                <span className={`text-[10px] font-bold uppercase tracking-tighter ${isDarkMode ? 'text-gray-500' : 'text-emerald-600'}`}>Live Web Search Active</span>
+                <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="text-xs font-medium uppercase tracking-[0.08em] text-accent">Live Web Search Active</span>
               </div>
             </div>
             {['Internship', 'Full-time', 'Part-time'].map((type) => (
               <button
                 key={type}
                 onClick={() => setSelectedType(selectedType === type ? null : type)}
-                className={`px-6 py-3 rounded-xl text-sm font-bold transition-all border shadow-sm ${
-                  selectedType === type 
-                    ? 'bg-primary-600 text-white border-primary-600'
-                    : (isDarkMode 
-                        ? 'bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700' 
-                        : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-primary-300')
+                className={`h-11 px-5 rounded-control border text-sm font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                  selectedType === type
+                    ? 'border-accent bg-accent text-accent-contrast'
+                    : 'border-border bg-surface text-muted hover:border-accent/40 hover:text-ink'
                 }`}
               >
                 {type}
@@ -267,11 +251,11 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4 items-center pt-6 border-t border-gray-100 dark:border-gray-800 transition-colors">
+        <div className="flex flex-wrap gap-4 items-center pt-6 border-t border-border">
           {/* Status Filter */}
           <div className="flex items-center gap-2">
-            <span className={`text-xs font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t.jobs.statusLabel}:</span>
-            <div className={`flex p-1 rounded-xl border transition-colors ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-200'}`}>
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.jobs.statusLabel}:</span>
+            <div className="flex rounded-control border border-border bg-background p-0.5">
               {[
                 { id: 'all', label: t.jobs.statusAll, count: jobs.length },
                 { id: 'applied', label: t.jobs.statusApplied, count: appliedJobs.length },
@@ -280,18 +264,18 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 <button
                   key={s.id}
                   onClick={() => setApplicationStatus(s.id as any)}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-1.5 ${
-                    applicationStatus === s.id 
-                      ? (isDarkMode ? 'bg-gray-700 text-primary-400 shadow-sm' : 'bg-white text-primary-600 shadow-sm')
-                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-primary-600 hover:bg-white')
+                  className={`h-9 px-3 rounded-[4px] text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                    applicationStatus === s.id
+                      ? 'bg-surface text-ink shadow-card'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
                   {s.label}
                   {s.count > 0 && (
-                    <span className={`px-1.5 py-0.5 rounded-full text-[8px] transition-colors ${
+                    <span className={`px-1.5 py-0.5 rounded-full text-[10px] transition-colors ${
                       applicationStatus === s.id
-                        ? 'bg-primary-600 text-white'
-                        : (isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500')
+                        ? 'bg-accent text-accent-contrast'
+                        : 'bg-border text-muted'
                     }`}>
                       {s.count}
                     </span>
@@ -303,15 +287,11 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
           {/* Company Filter */}
           <div className="flex items-center gap-2">
-            <span className={`text-xs font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>{t.jobs.companyLabel}:</span>
-            <select 
-              value={selectedCompany || ''} 
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.jobs.companyLabel}:</span>
+            <select
+              value={selectedCompany || ''}
               onChange={(e) => setSelectedCompany(e.target.value || null)}
-              className={`border rounded-xl px-3 py-2 text-xs font-bold outline-none cursor-pointer transition-colors ${
-                isDarkMode 
-                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-primary-900/30' 
-                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-primary-100'
-              }`}
+              className="h-11 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
             >
               <option value="">{t.jobs.allCompanies}</option>
               <optgroup label={t.jobs.popularCompanies}>
@@ -328,17 +308,15 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
           </div>
 
           {/* Quick Filter chips for popular companies if they have jobs */}
-          <div className={`hidden lg:flex items-center gap-2 border-l transition-colors pl-4 ml-2 ${isDarkMode ? 'border-gray-800' : 'border-gray-200'}`}>
+          <div className="hidden lg:flex items-center gap-2 border-l border-border pl-4 ml-2">
             {companies.filter(c => POPULAR_COMPANIES.includes(c)).slice(0, 3).map(c => (
               <button
                 key={c}
                 onClick={() => setSelectedCompany(selectedCompany === c ? null : c)}
-                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border ${
-                  selectedCompany === c 
-                    ? 'bg-primary-600 text-white border-primary-600 dark:shadow-none'
-                    : (isDarkMode
-                        ? 'bg-gray-800 text-gray-400 border-gray-700 hover:text-primary-400 hover:border-primary-100'
-                        : 'bg-white text-gray-500 border-gray-200 hover:text-primary-600 hover:border-primary-300 hover:bg-gray-50')
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                  selectedCompany === c
+                    ? 'border-accent/30 bg-accent-tint text-accent'
+                    : 'border-border bg-surface text-muted hover:border-accent/40 hover:text-ink'
                 }`}
               >
                 {c}
@@ -348,15 +326,11 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
           {/* Domain Filter */}
           <div className="flex items-center gap-2">
-            <span className={`text-xs font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>{t.jobs.filterDomain}:</span>
-            <select 
-              value={selectedDomain || ''} 
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.jobs.filterDomain}:</span>
+            <select
+              value={selectedDomain || ''}
               onChange={(e) => setSelectedDomain(e.target.value || null)}
-              className={`border rounded-xl px-3 py-2 text-xs font-bold outline-none transition-colors ${
-                isDarkMode 
-                  ? 'bg-gray-800 border-gray-700 text-gray-300 focus:ring-primary-900/30' 
-                  : 'bg-gray-100 border-gray-300 text-gray-700 focus:ring-primary-100'
-              }`}
+              className="h-11 w-auto rounded-control border border-border bg-surface px-3 text-xs text-ink outline-none transition-colors cursor-pointer focus:border-accent focus:ring-2 focus:ring-accent/25"
             >
               <option value="">{t.jobs.allDomains}</option>
               {domains.map(d => <option key={d} value={d}>{d}</option>)}
@@ -365,8 +339,8 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
           {/* Date Filter */}
           <div className="flex items-center gap-2">
-            <span className={`text-xs font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>{t.jobs.filterDate}:</span>
-            <div className={`flex p-1 rounded-xl border transition-colors ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-200 border-gray-300'}`}>
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.jobs.filterDate}:</span>
+            <div className="flex rounded-control border border-border bg-background p-0.5">
               {[
                 { id: 'all', label: t.jobs.dateAll },
                 { id: 'today', label: t.jobs.dateToday },
@@ -375,10 +349,10 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 <button
                   key={d.id}
                   onClick={() => setDateFilter(d.id as any)}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-all ${
-                    dateFilter === d.id 
-                      ? (isDarkMode ? 'bg-gray-700 text-primary-400 shadow-sm' : 'bg-white text-primary-600 shadow-sm')
-                      : (isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-primary-600 hover:bg-white')
+                  className={`h-9 px-3 rounded-[4px] text-xs font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                    dateFilter === d.id
+                      ? 'bg-surface text-ink shadow-card'
+                      : 'text-muted hover:text-ink'
                   }`}
                 >
                   {d.label}
@@ -388,24 +362,25 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
           </div>
 
           {/* Remote Toggle */}
-          <button 
+          <button
             onClick={() => setRemoteOnly(!remoteOnly)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all text-xs font-bold ${
-              remoteOnly 
-                ? (isDarkMode ? 'bg-emerald-900/30 border-emerald-800 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-600')
-                : (isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-100')
+            className={`flex items-center gap-2 h-11 px-4 rounded-control border transition-colors text-xs font-medium cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+              remoteOnly
+                ? 'border-accent/30 bg-accent-tint text-accent'
+                : 'border-border bg-surface text-muted hover:border-accent/40 hover:text-ink'
             }`}
           >
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${remoteOnly ? 'border-emerald-600 bg-emerald-600 shadow-sm' : 'border-gray-300'}`}>
-              {remoteOnly && <CheckCircle2 size={10} className="text-white" />}
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${remoteOnly ? 'border-accent bg-accent' : 'border-border'}`}>
+              {remoteOnly && <CheckCircle2 size={10} className="text-accent-contrast" />}
             </div>
             {t.jobs.filterRemote}
           </button>
-          
+
           {(selectedType || selectedDomain || selectedCompany || remoteOnly || dateFilter !== 'all' || searchTerm || applicationStatus !== 'all') && (
-            <motion.button 
+            <motion.button
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
               onClick={() => {
                 setSearchTerm('');
                 setSelectedType(null);
@@ -415,11 +390,7 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
                 setDateFilter('all');
                 setApplicationStatus('all');
               }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ml-auto hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 ${
-                isDarkMode 
-                  ? 'bg-gray-800 text-gray-500' 
-                  : 'bg-gray-100 text-gray-400'
-              }`}
+              className="flex items-center gap-2 h-11 px-4 rounded-control text-xs font-medium text-muted transition-colors ml-auto cursor-pointer hover:text-destructive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               <History size={14} className="rotate-180" />
               {t.jobs.resetFilters}
@@ -430,145 +401,138 @@ export default function JobBoard({ lang = 'en', isDarkMode = false }: { lang?: L
 
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-         <StatCard label={t.jobs.statJobs} value={filteredJobs.length.toString()} icon={Zap} color="text-blue-600 dark:text-blue-400" bg="bg-blue-50 dark:bg-blue-900/30" isDarkMode={isDarkMode} />
-         <StatCard label={t.jobs.statMatch} value="88%" icon={Star} color="text-amber-500 dark:text-amber-400" bg="bg-amber-50 dark:bg-amber-900/30" isDarkMode={isDarkMode} />
-         <StatCard label={t.jobs.statPartners} value="156" icon={Building2} color="text-violet-600 dark:text-violet-400" bg="bg-violet-50 dark:bg-violet-900/30" isDarkMode={isDarkMode} />
-         <StatCard label={t.jobs.statUpdated} value={t.jobs.statAzi} icon={Calendar} color="text-emerald-500 dark:text-emerald-400" bg="bg-emerald-50 dark:bg-emerald-900/30" isDarkMode={isDarkMode} />
+         <StatCard label={t.jobs.statJobs} value={filteredJobs.length.toString()} icon={Zap} />
+         <StatCard label={t.jobs.statMatch} value="88%" icon={Star} />
+         <StatCard label={t.jobs.statPartners} value="156" icon={Building2} />
+         <StatCard label={t.jobs.statUpdated} value={t.jobs.statAzi} icon={Calendar} />
       </div>
 
       {/* Results Grid */}
       <div className="grid md:grid-cols-2 gap-6">
         <AnimatePresence mode="popLayout">
-          {filteredJobs.map((job, idx) => (
-            <motion.div
-              layout
-              key={job.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ delay: idx * 0.05 }}
-              className={`p-6 rounded-xl border transition-all duration-300 group flex flex-col justify-between relative overflow-hidden ${
-                appliedJobs.includes(job.id)
-                  ? (isDarkMode ? 'border-emerald-800 bg-emerald-950/40 shadow-none' : 'border-emerald-200 bg-emerald-50 shadow-sm')
-                  : (isDarkMode ? 'bg-gray-900 border-gray-800 shadow-none' : 'bg-white border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5')
-              }`}
-            >
-              {appliedJobs.includes(job.id) && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 45 }}
-                  className="absolute top-0 right-0 py-1.5 px-6 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest translate-x-[25px] translate-y-[5px] shadow-sm z-10"
-                >
-                  {t.jobs.applied}
-                </motion.div>
-              )}
-              <div>
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold border transition-colors ${
-                      appliedJobs.includes(job.id) 
-                        ? (isDarkMode ? 'bg-emerald-900 border-emerald-800 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-emerald-600')
-                        : (isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-500' : 'bg-gray-50 border-gray-200 text-gray-400')
-                    }`}>
-                       {appliedJobs.includes(job.id) ? <CheckCircle2 size={24} /> : job.company.charAt(0)}
+          {filteredJobs.map((job, idx) => {
+            const applied = appliedJobs.includes(job.id);
+            return (
+              <motion.div
+                layout
+                key={job.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: 'easeOut', delay: idx * 0.03 }}
+                className="rounded-card border border-border bg-surface p-6 transition-all duration-200 hover:border-accent/40 hover:shadow-hover flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-11 h-11 rounded-card flex items-center justify-center font-semibold border transition-colors shrink-0 ${
+                        applied
+                          ? 'bg-accent-tint border-accent/30 text-accent'
+                          : 'bg-background border-border text-muted'
+                      }`}>
+                         {applied ? <CheckCircle2 size={20} /> : job.company.charAt(0)}
+                      </div>
+                      <div>
+                        <h3 className="text-[18px] font-semibold text-ink">{job.title}</h3>
+                        <p className="text-sm text-muted">{job.company}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className={`font-bold group-hover:text-primary-600 transition-colors ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{job.title}</h3>
-                      <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{job.company}</p>
+                    <div className="text-right">
+                      {applied && (
+                        <Badge icon={CheckCircle2} label={t.jobs.applied} variant="accent" />
+                      )}
+                      <div className="inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent-tint px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-accent mb-1 mt-1">
+                        <Zap size={10} fill="currentColor" /> {job.matchScore}% Match
+                      </div>
+                      {job.source && job.source !== 'Featured' && (
+                        <div className="flex items-center gap-1 text-[10px] font-medium text-clay-text uppercase tracking-wider mt-1 justify-end">
+                          <Globe size={10} /> {job.source}
+                        </div>
+                      )}
+                      {job.source === 'Featured' && (
+                        <div className="flex items-center gap-1 text-[10px] font-medium text-muted uppercase tracking-wider mt-1 justify-end">
+                          <Star size={10} fill="currentColor" /> {t.jobs.featured}
+                        </div>
+                      )}
+                      <p className="text-[10px] font-medium text-muted uppercase tracking-wider mt-1">
+                        {new Date(job.postedAt).toLocaleDateString()}
+                      </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider inline-flex items-center gap-1 mb-1">
-                      <Zap size={10} fill="currentColor" /> {job.matchScore}% Match
-                    </div>
-                    {job.source && job.source !== 'Featured' && (
-                      <div className="flex items-center gap-1 text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tighter mt-1 justify-end">
-                        <Globe size={10} /> {job.source}
-                      </div>
-                    )}
-                    {job.source === 'Featured' && (
-                      <div className={`flex items-center gap-1 text-[9px] font-bold uppercase tracking-tighter mt-1 justify-end ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                        <Star size={10} fill="currentColor" /> {t.jobs.featured}
-                      </div>
-                    )}
-                    <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                      {new Date(job.postedAt).toLocaleDateString()}
-                    </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge icon={MapPin} label={job.location} variant="neutral" />
+                    <Badge icon={Filter} label={job.type} variant="neutral" />
+                    <Badge icon={Building2} label={job.domain} variant="neutral" />
+                    {job.remote && <Badge icon={CheckCircle2} label="Remote Friendly" variant="accent" />}
+                    {job.source && job.source !== 'Featured' && <Badge icon={ExternalLink} label={t.jobs.realResult} variant="clay" />}
                   </div>
+
+                  <p className="text-sm text-muted leading-relaxed line-clamp-2 mb-6">
+                    {job.description}
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge icon={MapPin} label={job.location} isDarkMode={isDarkMode} />
-                  <Badge icon={Filter} label={job.type} isDarkMode={isDarkMode} />
-                  <Badge icon={Building2} label={job.domain} color={isDarkMode ? "text-blue-400 bg-blue-500/10 border-blue-500/20" : "text-blue-600 bg-blue-50 border-blue-100"} isDarkMode={isDarkMode} />
-                  {job.remote && <Badge icon={CheckCircle2} label="Remote Friendly" color={isDarkMode ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" : "text-emerald-600 bg-emerald-50 border-emerald-100"} isDarkMode={isDarkMode} />}
-                  {job.source && job.source !== 'Featured' && <Badge icon={ExternalLink} label={t.jobs.realResult} color={isDarkMode ? "text-violet-400 bg-violet-500/10 border-violet-500/20" : "text-violet-600 bg-violet-50 border-violet-100"} isDarkMode={isDarkMode} />}
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                   <button
+                    onClick={() => job.url && window.open(job.url, '_blank')}
+                    className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control border border-border bg-surface text-ink text-sm font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
+                   >
+                     {t.jobs.detailsBtn} <ArrowUpRight size={14} />
+                   </button>
+                   <motion.button
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleApply(job.id, job.url)}
+                    className={`inline-flex items-center justify-center gap-2 h-11 px-4 rounded-control text-sm font-semibold cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px ${
+                      applied
+                        ? 'border border-accent/30 bg-accent-tint text-accent'
+                        : 'bg-accent text-accent-contrast hover:bg-accent-hover'
+                    }`}
+                   >
+                     {applied ? (
+                       <span className="flex items-center gap-2"><CheckCircle2 size={16} className="shrink-0" /> {t.jobs.applied}</span>
+                     ) : t.jobs.applyBtn}
+                   </motion.button>
                 </div>
-
-                <p className={`text-sm mb-6 leading-relaxed line-clamp-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {job.description}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-800 transition-colors">
-                 <button 
-                  onClick={() => job.url && window.open(job.url, '_blank')}
-                  className="text-primary-600 dark:text-primary-400 text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all"
-                 >
-                   {t.jobs.detailsBtn} <ArrowUpRight size={14} />
-                 </button>
-                 <motion.button 
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleApply(job.id, job.url)}
-                  className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
-                    appliedJobs.includes(job.id)
-                      ? (isDarkMode ? 'bg-emerald-900/30 text-emerald-400 font-bold' : 'bg-emerald-50 text-emerald-600 font-bold')
-                      : (isDarkMode ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md')
-                  }`}
-                 >
-                   {appliedJobs.includes(job.id) ? (
-                     <span className="flex items-center gap-2"><CheckCircle2 size={16} className="shrink-0" /> {t.jobs.applied}</span>
-                   ) : t.jobs.applyBtn}
-                 </motion.button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 
       {filteredJobs.length === 0 && (
-        <div className={`text-center py-20 rounded-xl border border-dashed transition-all ${
-          isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
-        }`}>
-           <Search size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-           <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.jobs.noResults}</h3>
-           <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-2`}>{t.jobs.noResultsDesc}</p>
+        <div className="rounded-card border border-dashed border-border py-16 text-center">
+           <Briefcase size={24} className="mx-auto text-muted/60" />
+           <h3 className="text-base font-semibold text-ink mt-4">{t.jobs.noResults}</h3>
+           <p className="text-sm text-muted mt-3">{t.jobs.noResultsDesc}</p>
         </div>
       )}
     </div>
   );
 }
 
-function StatCard({ label, value, icon: Icon, color, bg, isDarkMode }: any) {
+function StatCard({ label, value, icon: Icon }: { label: string; value: string; icon: LucideIcon }) {
   return (
-    <div className={`p-5 rounded-xl border shadow-sm transition-all hover:border-gray-300 flex items-center gap-4 ${
-      isDarkMode ? 'bg-gray-900 border-gray-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:border-gray-700' : 'bg-white border-gray-200'
-    }`}>
-      <div className={`${bg} ${color} w-10 h-10 rounded-xl flex items-center justify-center border border-current opacity-80`}>
-        <Icon size={20} />
+    <div className="rounded-card border border-border bg-surface p-5 flex items-center gap-4">
+      <div className="flex h-10 w-10 items-center justify-center rounded-card bg-accent-tint text-accent shrink-0">
+        <Icon size={18} />
       </div>
       <div>
-        <div className={`text-[10px] uppercase font-black tracking-widest ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{label}</div>
-        <div className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{value}</div>
+        <div className="font-display text-[26px] font-medium text-ink leading-none">{value}</div>
+        <div className="text-xs font-medium uppercase tracking-[0.08em] text-muted mt-1.5">{label}</div>
       </div>
     </div>
   );
 }
 
-function Badge({ label, icon: Icon, color, isDarkMode }: any) {
-  const defaultColor = isDarkMode ? 'text-gray-400 bg-gray-800 border-gray-700/50' : 'text-gray-700 bg-gray-100 border-gray-300';
+function Badge({ label, icon: Icon, variant = 'neutral' }: { label: string; icon?: LucideIcon; variant?: 'neutral' | 'accent' | 'clay' }) {
+  const variantClasses: Record<string, string> = {
+    neutral: 'border-border bg-surface text-muted',
+    accent: 'border-accent/30 bg-accent-tint text-accent',
+    clay: 'border-clay/30 bg-clay-tint text-clay-text',
+  };
   return (
-    <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 border transition-colors ${color || defaultColor}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${variantClasses[variant]}`}>
       {Icon && <Icon size={12} />} {label}
     </span>
   );

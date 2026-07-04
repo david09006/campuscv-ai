@@ -5,7 +5,7 @@ import {
   Code, Award, Heart, Plus, Trash2, Sparkles, Download,
   FileText, Layout, RotateCcw, ChevronRight, CheckCircle2,
   Target, X, ChevronLeft, Palette, Type, Ruler, Linkedin, Globe,
-  AlertCircle, type LucideIcon
+  AlertCircle, Loader2, type LucideIcon
 } from 'lucide-react';
 import { generateCVContent } from '../lib/gemini';
 import { CVData, CVTemplate } from '../types';
@@ -119,27 +119,17 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
   };
 
   return (
-    <div className={`flex flex-col lg:flex-row h-[calc(100vh-64px)] overflow-hidden transition-colors ${
-      isDarkMode ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'
-    }`}>
+    <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] overflow-hidden bg-background text-ink">
       {/* Sidebar - Form */}
-      <div className={`w-full lg:w-[450px] border-r flex flex-col h-full z-10 transition-colors ${
-        isDarkMode ? 'bg-gray-900 border-gray-800 shadow-2xl shadow-black/20' : 'bg-white border-gray-200 shadow-lg shadow-gray-200/50'
-      }`}>
-        <div className={`p-6 border-b flex items-center justify-between transition-colors ${
-          isDarkMode ? 'border-gray-800' : 'border-gray-200'
-        }`}>
+      <div className="w-full lg:w-[450px] border-r border-border bg-surface flex flex-col h-full z-10">
+        <div className="p-6 border-b border-border flex items-center justify-between">
           <div>
-            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.builder.title}</h2>
-            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.builder.step} {currentStep + 1} {t.builder.of} {steps.length}</p>
+            <h2 className="font-display text-[21px] font-medium text-ink">{t.builder.title}</h2>
+            <p className="text-sm text-muted">{t.builder.step} {currentStep + 1} {t.builder.of} {steps.length}</p>
           </div>
-          <button 
+          <button
             onClick={() => setData(INITIAL_DATA)}
-            className={`p-2 rounded-lg transition-colors ${
-              isDarkMode 
-                ? 'text-gray-500 hover:text-red-500 hover:bg-red-900/20' 
-                : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-            }`}
+            className="flex h-11 w-11 items-center justify-center rounded-control text-muted transition-colors hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             title={t.builder.reset}
           >
             <RotateCcw size={18} />
@@ -151,46 +141,44 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className={`h-1.5 flex-1 rounded-full transition-all duration-300 relative group ${
-                idx <= currentStep
-                  ? 'bg-primary-600'
-                  : (isDarkMode ? 'bg-gray-800' : 'bg-gray-200')
+              className={`h-1.5 flex-1 rounded-full transition-all duration-300 relative ${
+                idx <= currentStep ? 'bg-accent' : 'bg-border'
               }`}
             >
-              <div className={`absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold transition-colors ${
-                idx <= currentStep
-                  ? 'text-primary-600'
-                  : (isDarkMode ? 'text-gray-600' : 'text-gray-400')
+              <div className={`absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-semibold transition-colors ${
+                idx <= currentStep ? 'text-accent' : 'text-muted'
               }`}>
                 0{idx + 1}
               </div>
             </div>
           ))}
         </div>
+        <p className="px-6 pt-3 text-xs font-medium uppercase tracking-[0.08em] text-muted">{steps[currentStep].title}</p>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 12 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
+              exit={{ opacity: 0, x: -12 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
               className="space-y-6"
             >
               {currentStep === 0 && (
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label={t.builder.fullName} name="fullName" value={data.personalInfo.fullName} onChange={handlePersonalInfoChange} icon={User} placeholder="Popescu Ion" isDarkMode={isDarkMode} />
-                    <InputField label={t.builder.email} name="email" value={data.personalInfo.email} onChange={handlePersonalInfoChange} icon={Mail} placeholder="ion@email.com" isDarkMode={isDarkMode} />
+                    <InputField label={t.builder.fullName} name="fullName" value={data.personalInfo.fullName} onChange={handlePersonalInfoChange} icon={User} placeholder="Popescu Ion" />
+                    <InputField label={t.builder.email} name="email" value={data.personalInfo.email} onChange={handlePersonalInfoChange} icon={Mail} placeholder="ion@email.com" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label={t.builder.phone} name="phone" value={data.personalInfo.phone} onChange={handlePersonalInfoChange} icon={Phone} placeholder="07xx xxx xxx" isDarkMode={isDarkMode} />
-                    <InputField label={t.builder.location} name="location" value={data.personalInfo.location} onChange={handlePersonalInfoChange} icon={MapPin} placeholder="București, RO" isDarkMode={isDarkMode} />
+                    <InputField label={t.builder.phone} name="phone" value={data.personalInfo.phone} onChange={handlePersonalInfoChange} icon={Phone} placeholder="07xx xxx xxx" />
+                    <InputField label={t.builder.location} name="location" value={data.personalInfo.location} onChange={handlePersonalInfoChange} icon={MapPin} placeholder="București, RO" />
                   </div>
-                  <InputField label={t.builder.targetRole} name="targetRole" value={data.personalInfo.targetRole} onChange={handlePersonalInfoChange} icon={Target} placeholder="Junior Frontend Developer" isDarkMode={isDarkMode} />
+                  <InputField label={t.builder.targetRole} name="targetRole" value={data.personalInfo.targetRole} onChange={handlePersonalInfoChange} icon={Target} placeholder="Junior Frontend Developer" />
                   <div className="grid grid-cols-2 gap-4">
-                    <InputField label={t.builder.linkedin} name="linkedin" value={data.personalInfo.linkedin} onChange={handlePersonalInfoChange} icon={Linkedin} placeholder="linkedin.com/in/username" isDarkMode={isDarkMode} />
-                    <InputField label={t.builder.portfolio} name="portfolio" value={data.personalInfo.portfolio} onChange={handlePersonalInfoChange} icon={Globe} placeholder="github.com/username" isDarkMode={isDarkMode} />
+                    <InputField label={t.builder.linkedin} name="linkedin" value={data.personalInfo.linkedin} onChange={handlePersonalInfoChange} icon={Linkedin} placeholder="linkedin.com/in/username" />
+                    <InputField label={t.builder.portfolio} name="portfolio" value={data.personalInfo.portfolio} onChange={handlePersonalInfoChange} icon={Globe} placeholder="github.com/username" />
                   </div>
                 </div>
               )}
@@ -198,57 +186,43 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
               {currentStep === 1 && (
                 <div className="space-y-8">
                   <div>
-                    <SectionHeader title={t.builder.experience} icon={Briefcase} isDarkMode={isDarkMode} onAdd={() => addItem('experience', { id: crypto.randomUUID(), company: '', position: '', startDate: '', endDate: '', description: '' })} />
+                    <SectionHeader title={t.builder.experience} icon={Briefcase} onAdd={() => addItem('experience', { id: crypto.randomUUID(), company: '', position: '', startDate: '', endDate: '', description: '' })} />
                     <div className="space-y-4 mt-4">
+                      {data.experience.length === 0 && (
+                        <div className="rounded-card border border-dashed border-border px-4 py-8 text-center">
+                          <Briefcase size={20} className="text-muted/60 mx-auto" />
+                          <p className="text-sm text-muted mt-2">{t.builder.addBtn}</p>
+                        </div>
+                      )}
                       {data.experience.map((exp, idx) => (
-                        <div key={exp.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
-                          isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
-                            : 'bg-white border-gray-300 hover:border-primary-500'
-                        }`}>
-                          <button 
-                            onClick={() => removeItem('experience', idx)} 
-                            className={`absolute -top-2 -right-2 p-1.5 shadow-md border rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 ${
-                              isDarkMode 
-                                ? 'bg-gray-800 border-gray-700 text-gray-500 hover:text-red-500' 
-                                : 'bg-white border-gray-100 text-gray-400 hover:text-red-500'
-                            }`}
+                        <div key={exp.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
+                          <button
+                            onClick={() => removeItem('experience', idx)}
+                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                           >
                             <Trash2 size={14} />
                           </button>
                           <div className="space-y-3">
                             <div className="grid grid-cols-2 gap-3">
-                              <input 
-                                className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
-                                  isDarkMode 
-                                    ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                    : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                                }`} 
-                                placeholder={t.builder.company} 
-                                value={exp.company} 
-                                onChange={e => updateItem('experience', idx, { ...exp, company: e.target.value })} 
+                              <input
+                                className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                                placeholder={t.builder.company}
+                                value={exp.company}
+                                onChange={e => updateItem('experience', idx, { ...exp, company: e.target.value })}
                               />
-                              <input 
-                                className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
-                                  isDarkMode 
-                                    ? 'bg-gray-900/50 border-gray-700 text-primary-400 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                    : 'bg-white border-gray-200 text-primary-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                                }`} 
-                                placeholder={t.builder.position} 
-                                value={exp.position} 
-                                onChange={e => updateItem('experience', idx, { ...exp, position: e.target.value })} 
+                              <input
+                                className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                                placeholder={t.builder.position}
+                                value={exp.position}
+                                onChange={e => updateItem('experience', idx, { ...exp, position: e.target.value })}
                               />
                             </div>
-                            <textarea 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-xs transition-all shadow-sm outline-none resize-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              rows={3} 
-                              placeholder={t.builder.descPlaceholder} 
-                              value={exp.description} 
-                              onChange={e => updateItem('experience', idx, { ...exp, description: e.target.value })} 
+                            <textarea
+                              className="w-full h-auto rounded-control border border-border bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25 resize-none"
+                              rows={3}
+                              placeholder={t.builder.descPlaceholder}
+                              value={exp.description}
+                              onChange={e => updateItem('experience', idx, { ...exp, description: e.target.value })}
                             />
                           </div>
                         </div>
@@ -257,55 +231,41 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                    <SectionHeader title={t.builder.projects} icon={Code} isDarkMode={isDarkMode} onAdd={() => addItem('projects', { id: crypto.randomUUID(), name: '', role: '', technologies: '', description: '' })} />
+                    <SectionHeader title={t.builder.projects} icon={Code} onAdd={() => addItem('projects', { id: crypto.randomUUID(), name: '', role: '', technologies: '', description: '' })} />
                     <div className="space-y-4 mt-4">
+                      {data.projects.length === 0 && (
+                        <div className="rounded-card border border-dashed border-border px-4 py-8 text-center">
+                          <Code size={20} className="text-muted/60 mx-auto" />
+                          <p className="text-sm text-muted mt-2">{t.builder.addBtn}</p>
+                        </div>
+                      )}
                       {data.projects.map((proj, idx) => (
-                        <div key={proj.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
-                          isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
-                            : 'bg-white border-gray-300 hover:border-primary-500'
-                        }`}>
-                           <button 
-                             onClick={() => removeItem('projects', idx)} 
-                             className={`absolute -top-2 -right-2 p-1.5 shadow-md border rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 ${
-                               isDarkMode 
-                                 ? 'bg-gray-800 border-gray-700 text-gray-500 hover:text-red-500' 
-                                 : 'bg-white border-gray-100 text-gray-400 hover:text-red-500'
-                             }`}
+                        <div key={proj.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
+                           <button
+                             onClick={() => removeItem('projects', idx)}
+                             className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                            >
                             <Trash2 size={14} />
                           </button>
                           <div className="space-y-3">
-                            <input 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              placeholder={t.builder.projectName} 
-                              value={proj.name} 
-                              onChange={e => updateItem('projects', idx, { ...proj, name: e.target.value })} 
+                            <input
+                              className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                              placeholder={t.builder.projectName}
+                              value={proj.name}
+                              onChange={e => updateItem('projects', idx, { ...proj, name: e.target.value })}
                             />
-                            <input 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-[10px] font-mono transition-all shadow-sm outline-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-500 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-100 text-gray-400 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              placeholder={t.builder.techPlaceholder} 
-                              value={proj.technologies} 
-                              onChange={e => updateItem('projects', idx, { ...proj, technologies: e.target.value })} 
+                            <input
+                              className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-xs font-mono text-muted placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                              placeholder={t.builder.techPlaceholder}
+                              value={proj.technologies}
+                              onChange={e => updateItem('projects', idx, { ...proj, technologies: e.target.value })}
                             />
-                            <textarea 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-xs transition-all shadow-sm outline-none resize-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-300 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-200 text-gray-600 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              rows={2} 
-                              placeholder={t.builder.shortDesc} 
-                              value={proj.description} 
-                              onChange={e => updateItem('projects', idx, { ...proj, description: e.target.value })} 
+                            <textarea
+                              className="w-full h-auto rounded-control border border-border bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25 resize-none"
+                              rows={2}
+                              placeholder={t.builder.shortDesc}
+                              value={proj.description}
+                              onChange={e => updateItem('projects', idx, { ...proj, description: e.target.value })}
                             />
                           </div>
                         </div>
@@ -318,44 +278,34 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
               {currentStep === 2 && (
                 <div className="space-y-8">
                   <div>
-                    <SectionHeader title={t.builder.education} icon={GraduationCap} isDarkMode={isDarkMode} onAdd={() => addItem('education', { id: crypto.randomUUID(), institution: '', degree: '', startDate: '', endDate: '', description: '' })} />
+                    <SectionHeader title={t.builder.education} icon={GraduationCap} onAdd={() => addItem('education', { id: crypto.randomUUID(), institution: '', degree: '', startDate: '', endDate: '', description: '' })} />
                     <div className="space-y-4 mt-4">
+                      {data.education.length === 0 && (
+                        <div className="rounded-card border border-dashed border-border px-4 py-8 text-center">
+                          <GraduationCap size={20} className="text-muted/60 mx-auto" />
+                          <p className="text-sm text-muted mt-2">{t.builder.addBtn}</p>
+                        </div>
+                      )}
                       {data.education.map((edu, idx) => (
-                        <div key={edu.id} className={`p-5 rounded-2xl relative group border shadow-sm transition-all ${
-                          isDarkMode 
-                            ? 'bg-gray-800 border-gray-700 hover:border-primary-500' 
-                            : 'bg-white border-gray-300 hover:border-primary-500'
-                        }`}>
-                          <button 
-                            onClick={() => removeItem('education', idx)} 
-                            className={`absolute -top-2 -right-2 p-1.5 shadow-md border rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 ${
-                              isDarkMode 
-                                ? 'bg-gray-800 border-gray-700 text-gray-500 hover:text-red-500' 
-                                : 'bg-white border-gray-100 text-gray-400 hover:text-red-500'
-                            }`}
+                        <div key={edu.id} className="rounded-card border border-border bg-background p-4 space-y-3 relative group">
+                          <button
+                            onClick={() => removeItem('education', idx)}
+                            className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                           >
                             <Trash2 size={14} />
                           </button>
                           <div className="space-y-3">
-                            <input 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-sm font-bold transition-all shadow-sm outline-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-200 text-gray-900 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              placeholder={t.builder.institution} 
-                              value={edu.institution} 
-                              onChange={e => updateItem('education', idx, { ...edu, institution: e.target.value })} 
+                            <input
+                              className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                              placeholder={t.builder.institution}
+                              value={edu.institution}
+                              onChange={e => updateItem('education', idx, { ...edu, institution: e.target.value })}
                             />
-                            <input 
-                              className={`w-full border rounded-lg px-3 py-2.5 text-sm transition-all shadow-sm outline-none ${
-                                isDarkMode 
-                                  ? 'bg-gray-900/50 border-gray-700 text-gray-400 focus:ring-4 focus:ring-primary-900/20 focus:border-primary-500' 
-                                  : 'bg-white border-gray-200 text-gray-500 focus:ring-4 focus:ring-primary-50/50 focus:border-primary-400'
-                              }`} 
-                              placeholder={t.builder.degree} 
-                              value={edu.degree} 
-                              onChange={e => updateItem('education', idx, { ...edu, degree: e.target.value })} 
+                            <input
+                              className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                              placeholder={t.builder.degree}
+                              value={edu.degree}
+                              onChange={e => updateItem('education', idx, { ...edu, degree: e.target.value })}
                             />
                           </div>
                         </div>
@@ -364,23 +314,17 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                     <SectionHeader title={t.builder.skills} icon={Code} isDarkMode={isDarkMode} />
+                     <SectionHeader title={t.builder.skills} icon={Code} />
                      <div className="mt-4 flex flex-wrap gap-2">
                         {data.skills.map((skill, idx) => (
-                          <div key={skill} className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border ${
-                            isDarkMode 
-                              ? 'bg-primary-500/10 text-primary-400 border-primary-500/20' 
-                              : 'bg-primary-50 text-primary-700 border-primary-100/50'
-                          }`}>
+                          <div key={skill} className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent-tint px-2.5 py-1 text-xs font-medium text-accent">
                             {skill}
-                            <button onClick={() => setData(prev => ({...prev, skills: prev.skills.filter((_, i) => i !== idx)}))} className={isDarkMode ? 'hover:text-primary-300' : 'hover:text-primary-900'}><X size={10} /></button>
+                            <button onClick={() => setData(prev => ({...prev, skills: prev.skills.filter((_, i) => i !== idx)}))} className="text-accent/70 hover:text-accent transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-full"><X size={10} /></button>
                           </div>
                         ))}
-                        <input 
-                          className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
-                          }`} 
-                          placeholder={`+ ${t.builder.addBtn}`} 
+                        <input
+                          className="bg-transparent border-b border-border outline-none px-2 py-1 text-xs min-w-[80px] text-ink placeholder:text-muted/60 transition-colors focus:border-accent"
+                          placeholder={`+ ${t.builder.addBtn}`}
                           onKeyDown={e => {
                             if (e.key === 'Enter') {
                               const val = e.currentTarget.value.trim();
@@ -395,23 +339,17 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                     <SectionHeader title={t.builder.certifications} icon={Award} isDarkMode={isDarkMode} />
+                     <SectionHeader title={t.builder.certifications} icon={Award} />
                      <div className="mt-4 flex flex-wrap gap-2">
                         {data.certifications.map((cert, idx) => (
-                          <div key={cert} className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border ${
-                            isDarkMode 
-                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                              : 'bg-emerald-50 text-emerald-700 border-emerald-100/50'
-                          }`}>
+                          <div key={cert} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-medium text-muted">
                             {cert}
-                            <button onClick={() => setData(prev => ({...prev, certifications: prev.certifications.filter((_, i) => i !== idx)}))} className={isDarkMode ? 'hover:text-emerald-300' : 'hover:text-emerald-900'}><X size={10} /></button>
+                            <button onClick={() => setData(prev => ({...prev, certifications: prev.certifications.filter((_, i) => i !== idx)}))} className="text-muted hover:text-ink transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-full"><X size={10} /></button>
                           </div>
                         ))}
-                        <input 
-                          className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
-                          }`} 
-                          placeholder={`+ ${t.builder.addBtn}`} 
+                        <input
+                          className="bg-transparent border-b border-border outline-none px-2 py-1 text-xs min-w-[80px] text-ink placeholder:text-muted/60 transition-colors focus:border-accent"
+                          placeholder={`+ ${t.builder.addBtn}`}
                           onKeyDown={e => {
                             if (e.key === 'Enter') {
                               const val = e.currentTarget.value.trim();
@@ -426,23 +364,17 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                     <SectionHeader title={t.builder.interests} icon={Heart} isDarkMode={isDarkMode} />
+                     <SectionHeader title={t.builder.interests} icon={Heart} />
                      <div className="mt-4 flex flex-wrap gap-2">
                         {data.interests.map((interest, idx) => (
-                          <div key={idx} className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border ${
-                            isDarkMode 
-                              ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' 
-                              : 'bg-rose-50 text-rose-700 border-rose-100/50'
-                          }`}>
+                          <div key={idx} className="inline-flex items-center gap-1.5 rounded-full border border-clay/30 bg-clay-tint px-2.5 py-1 text-xs font-medium text-clay-text">
                             {interest}
-                            <button onClick={() => setData(prev => ({...prev, interests: prev.interests.filter((_, i) => i !== idx)}))} className={isDarkMode ? 'hover:text-rose-300' : 'hover:text-rose-900'}><X size={10} /></button>
+                            <button onClick={() => setData(prev => ({...prev, interests: prev.interests.filter((_, i) => i !== idx)}))} className="text-clay-text/70 hover:text-clay-text transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-full"><X size={10} /></button>
                           </div>
                         ))}
-                        <input 
-                          className={`bg-transparent border-b outline-none px-2 py-1 text-xs min-w-[80px] transition-colors ${
-                            isDarkMode ? 'border-gray-700 text-white focus:border-primary-500' : 'border-gray-200 text-gray-900 focus:border-primary-500'
-                          }`} 
-                          placeholder={`+ ${t.builder.addBtn}`} 
+                        <input
+                          className="bg-transparent border-b border-border outline-none px-2 py-1 text-xs min-w-[80px] text-ink placeholder:text-muted/60 transition-colors focus:border-accent"
+                          placeholder={`+ ${t.builder.addBtn}`}
                           onKeyDown={e => {
                             if (e.key === 'Enter') {
                               const val = e.currentTarget.value.trim();
@@ -457,42 +389,34 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                     <SectionHeader title={t.builder.languages} icon={Globe} isDarkMode={isDarkMode} onAdd={() => addItem('languages', { id: crypto.randomUUID(), language: '', level: '' })} />
+                     <SectionHeader title={t.builder.languages} icon={Globe} onAdd={() => addItem('languages', { id: crypto.randomUUID(), language: '', level: '' })} />
                      <div className="space-y-4 mt-4">
+                         {data.languages.length === 0 && (
+                           <div className="rounded-card border border-dashed border-border px-4 py-8 text-center">
+                             <Globe size={20} className="text-muted/60 mx-auto" />
+                             <p className="text-sm text-muted mt-2">{t.builder.addBtn}</p>
+                           </div>
+                         )}
                          {data.languages.map((lang, idx) => (
-                           <div key={lang.id} className={`p-4 rounded-2xl relative group border shadow-sm flex gap-3 items-center transition-colors ${
-                             isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'
-                           }`}>
-                             <button 
-                               onClick={() => removeItem('languages', idx)} 
-                               className={`absolute -top-2 -right-2 p-1 shadow-md border rounded-full opacity-0 group-hover:opacity-100 transition-all z-10 ${
-                                 isDarkMode 
-                                   ? 'bg-gray-800 border-gray-700 text-gray-500 hover:text-red-500' 
-                                   : 'bg-white border-gray-100 text-gray-400 hover:text-red-500'
-                               }`}
+                           <div key={lang.id} className="rounded-card border border-border bg-background p-4 relative group flex gap-3 items-center">
+                             <button
+                               onClick={() => removeItem('languages', idx)}
+                               className="absolute -top-2 -right-2 z-10 flex h-9 w-9 items-center justify-center rounded-control border border-border bg-surface text-muted opacity-0 shadow-card transition-all group-hover:opacity-100 focus-visible:opacity-100 hover:bg-destructive-tint hover:text-destructive cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                              >
                                 <Trash2 size={12} />
                              </button>
                              <div className="flex-1 grid grid-cols-2 gap-2">
-                               <input 
-                                 className={`w-full border rounded-lg px-2 py-1.5 text-xs font-bold transition-all outline-none ${
-                                   isDarkMode 
-                                     ? 'bg-gray-900/50 border-gray-700 text-white focus:ring-2 focus:ring-primary-900/40' 
-                                     : 'bg-white border-gray-200 text-gray-900 focus:ring-2 focus:ring-primary-100'
-                                 }`} 
-                                 placeholder={t.builder.languageName} 
-                                 value={lang.language} 
-                                 onChange={e => updateItem('languages', idx, { ...lang, language: e.target.value })} 
+                               <input
+                                 className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                                 placeholder={t.builder.languageName}
+                                 value={lang.language}
+                                 onChange={e => updateItem('languages', idx, { ...lang, language: e.target.value })}
                                />
-                               <input 
-                                 className={`w-full border rounded-lg px-2 py-1.5 text-xs font-bold transition-all outline-none ${
-                                   isDarkMode 
-                                     ? 'bg-gray-900/50 border-gray-700 text-primary-400 focus:ring-2 focus:ring-primary-900/40' 
-                                     : 'bg-white border-gray-200 text-primary-600 focus:ring-2 focus:ring-primary-100'
-                                 }`} 
-                                 placeholder={t.builder.proficiency} 
-                                 value={lang.level} 
-                                 onChange={e => updateItem('languages', idx, { ...lang, level: e.target.value })} 
+                               <input
+                                 className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+                                 placeholder={t.builder.proficiency}
+                                 value={lang.level}
+                                 onChange={e => updateItem('languages', idx, { ...lang, level: e.target.value })}
                                />
                              </div>
                           </div>
@@ -504,19 +428,24 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
 
               {currentStep === 3 && (
                 <div className="space-y-6">
-                  <div className="bg-primary-600 rounded-2xl p-6 text-white overflow-hidden relative">
-                    <Sparkles className="absolute top-2 right-2 opacity-20 pointer-events-none" size={100} />
-                    <h3 className="text-lg font-bold mb-2">{t.builder.finalizeAI}</h3>
-                    <p className="text-primary-100 text-sm mb-4 leading-relaxed">{t.builder.finalizeAIDesc}</p>
+                  <div className="rounded-panel bg-accent dark:bg-accent-tint p-6">
+                    <h3 className="font-display text-[18px] font-medium text-accent-contrast dark:text-ink mb-1.5">{t.builder.finalizeAI}</h3>
+                    <p className="text-sm text-accent-contrast/80 dark:text-muted leading-relaxed mb-5">{t.builder.finalizeAIDesc}</p>
                     <button
                       onClick={handleGenerateAI}
                       disabled={isGenerating}
-                      className="w-full bg-white text-primary-600 py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition-all disabled:opacity-50"
+                      className="flex w-full h-11 items-center justify-center gap-2 rounded-control bg-surface text-sm font-semibold text-ink transition-colors hover:bg-background disabled:opacity-60 disabled:pointer-events-none cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-contrast dark:focus-visible:outline-ink"
                     >
-                      {isGenerating ? '...' : t.builder.generateBtn}
+                      {isGenerating ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin" /> {t.builder.generateBtn}
+                        </>
+                      ) : (
+                        t.builder.generateBtn
+                      )}
                     </button>
                     {generationError && (
-                      <div className="mt-4 flex items-start gap-2 bg-red-500/90 text-white text-sm rounded-xl p-3">
+                      <div className="flex items-start gap-2 rounded-card border border-destructive/40 bg-surface p-3 text-sm text-destructive mt-4">
                         <AlertCircle size={16} className="shrink-0 mt-0.5" />
                         <span>{generationError}</span>
                       </div>
@@ -524,7 +453,7 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
                   <div>
-                    <h4 className={`text-sm font-bold mb-3 flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <h4 className="text-sm font-semibold text-ink flex items-center gap-2 mb-3">
                       <Layout size={16} /> {t.builder.chooseTemplate}
                     </h4>
                     <div className="grid grid-cols-2 gap-3">
@@ -532,14 +461,14 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                         <button
                           key={tmpl}
                           onClick={() => setTemplate(tmpl)}
-                          className={`p-4 rounded-xl border-2 text-left transition-all ${
-                            template === tmpl 
-                              ? (isDarkMode ? 'border-primary-600 bg-primary-500/10 text-primary-400 shadow-md transform scale-[1.02]' : 'border-primary-600 bg-primary-50 text-primary-700 shadow-md transform scale-[1.02]')
-                              : (isDarkMode ? 'border-gray-800 bg-gray-900 text-gray-400 hover:border-gray-700' : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-primary-300 shadow-sm transition-colors')
+                          className={`p-3.5 rounded-card border text-left transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                            template === tmpl
+                              ? 'border-accent bg-accent-tint'
+                              : 'border-border bg-surface hover:border-accent/40'
                           }`}
                         >
-                          <span className="text-sm font-bold capitalize block">{tmpl}</span>
-                          <span className="text-[10px] opacity-70">
+                          <span className={`text-sm capitalize block ${template === tmpl ? 'font-semibold text-accent' : 'font-medium text-ink'}`}>{tmpl}</span>
+                          <span className="text-[11px] text-muted mt-0.5 block">
                             {tmpl === 'europass' || tmpl === 'corporate' ? 'Format Oficial' : tmpl === 'tech' ? 'Developer' : tmpl === 'academic' ? 'Times / Serif' : tmpl === 'creative' ? 'Modern 2-Col' : tmpl === 'retro' ? 'Vintage Warm' : 'Design optimizat'}
                           </span>
                         </button>
@@ -548,46 +477,44 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                   </div>
 
 {/* Customization controls */}
-<div className={`p-6 rounded-2xl border space-y-6 ${
-  isDarkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-white border-gray-200 shadow-sm'
-}`}>
-<h4 className={`text-sm font-bold flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+<div className="rounded-card border border-border bg-surface p-5 space-y-5">
+<h4 className="text-sm font-semibold text-ink flex items-center gap-2">
    <Palette size={16} /> {t.builder.customize}
 </h4>
 
 {/* Color picker */}
 <div className="space-y-3">
-   <label className="text-[10px] font-black uppercase text-gray-500 dark:text-gray-400 tracking-widest">{t.builder.primaryColor}</label>
+   <label className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.builder.primaryColor}</label>
                        <div className="flex gap-2">
                           {['#2563eb', '#1e293b', '#dc2626', '#16a34a', '#7c3aed', '#db2777'].map(color => (
-                            <button 
+                            <button
                               key={color}
                               onClick={() => setData(prev => ({...prev, settings: {...prev.settings, primaryColor: color}}))}
-                              className={`w-8 h-8 rounded-full border-2 transition-transform ${data.settings.primaryColor === color ? 'border-gray-900 dark:border-white scale-110' : 'border-transparent hover:scale-105'}`}
+                              className={`w-8 h-8 rounded-full transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${data.settings.primaryColor === color ? 'ring-2 ring-ink ring-offset-2 ring-offset-surface' : 'hover:ring-1 hover:ring-border'}`}
                               style={{ backgroundColor: color }}
                             />
                           ))}
-                          <input 
-                            type="color" 
+                          <input
+                            type="color"
                             value={data.settings.primaryColor}
                             onChange={e => setData(prev => ({...prev, settings: {...prev.settings, primaryColor: e.target.value}}))}
-                            className="w-8 h-8 rounded-full overflow-hidden cursor-pointer border-2 border-transparent bg-white dark:bg-gray-900"
+                            className="w-8 h-8 rounded-full overflow-hidden cursor-pointer bg-surface"
                           />
                        </div>
                     </div>
 
                     {/* Font picker */}
                     <div className="space-y-3">
-                       <label className={`text-[10px] font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-400' : 'text-gray-700'}`}>{t.builder.fontStyle}</label>
+                       <label className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.builder.fontStyle}</label>
                        <div className="grid grid-cols-3 gap-2">
                           {(['sans', 'serif', 'mono'] as const).map(font => (
                             <button
                               key={font}
                               onClick={() => setData(prev => ({...prev, settings: {...prev.settings, fontFamily: font}}))}
-                              className={`py-2 rounded-lg border text-xs font-medium transition-all ${
-                                data.settings.fontFamily === font 
-                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-primary-400 text-primary-600 shadow-sm')
-                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-primary-200')
+                              className={`h-9 rounded-control border text-xs font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                                data.settings.fontFamily === font
+                                  ? 'border-accent bg-accent-tint text-accent'
+                                  : 'border-border text-muted hover:border-accent/40 hover:text-ink'
                               }`}
                             >
                                {font === 'sans' ? t.builder.fontSans : font === 'serif' ? t.builder.fontSerif : t.builder.fontMono}
@@ -598,16 +525,16 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
 
                     {/* Spacing picker */}
                     <div className="space-y-3">
-                       <label className={`text-[10px] font-black uppercase tracking-widest ${isDarkMode ? 'text-gray-400' : 'text-gray-700'}`}>{t.builder.spacing}</label>
+                       <label className="text-xs font-medium uppercase tracking-[0.08em] text-muted">{t.builder.spacing}</label>
                        <div className="grid grid-cols-3 gap-2">
                           {(['compact', 'normal', 'relaxed'] as const).map(sp => (
                             <button
                               key={sp}
                               onClick={() => setData(prev => ({...prev, settings: {...prev.settings, spacing: sp}}))}
-                              className={`py-2 rounded-lg border text-xs font-medium transition-all ${
-                                data.settings.spacing === sp 
-                                  ? (isDarkMode ? 'bg-gray-700 border-gray-500 text-white shadow-sm' : 'bg-gray-100 border-primary-400 text-primary-600 shadow-sm')
-                                  : (isDarkMode ? 'bg-transparent border-gray-700 text-gray-400 hover:border-gray-600' : 'bg-transparent border-gray-200 text-gray-500 hover:border-primary-200')
+                              className={`h-9 rounded-control border text-xs font-medium transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                                data.settings.spacing === sp
+                                  ? 'border-accent bg-accent-tint text-accent'
+                                  : 'border-border text-muted hover:border-accent/40 hover:text-ink'
                               }`}
                             >
                                {sp === 'compact' ? t.builder.spacingCompact : sp === 'normal' ? t.builder.spacingNormal : t.builder.spacingRelaxed}
@@ -617,14 +544,10 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
                     </div>
                   </div>
 
-                  <motion.button 
-                    whileTap={{ scale: 0.95 }}
+                  <motion.button
+                    whileTap={{ scale: 0.98 }}
                     onClick={exportToPDF}
-                    className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${
-                      isDarkMode 
-                        ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none' 
-                        : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md'
-                    }`}
+                    className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
                   >
                     <Download size={20} /> {t.builder.downloadPDF}
                   </motion.button>
@@ -635,26 +558,22 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
         </div>
 
         {/* Footer Nav */}
-        <div className="p-6 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
-          <button 
+        <div className="p-5 border-t border-border flex items-center justify-between bg-surface">
+          <button
             onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-30"
+            className="flex h-11 items-center gap-2 text-sm font-medium text-muted hover:text-ink transition-colors disabled:opacity-40 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             <ChevronLeft size={18} /> {t.builder.back}
           </button>
-          
-          <button 
+
+          <button
             onClick={() => {
               if (currentStep < steps.length - 1) {
                 setCurrentStep(currentStep + 1);
               }
             }}
-            className={`px-6 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 transition-all ${
-              isDarkMode
-                ? 'bg-white text-gray-900 hover:bg-gray-100 shadow-none'
-                : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm hover:shadow-md'
-            }`}
+            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-control bg-accent text-accent-contrast text-sm font-semibold cursor-pointer transition-colors duration-200 hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
           >
             {currentStep === steps.length - 1 ? t.builder.done : t.builder.continue}
             <ChevronRight size={18} />
@@ -663,30 +582,20 @@ export default function ResumeBuilder({ lang = 'en', isDarkMode = false }: { lan
       </div>
 
       {/* Main Preview */}
-      <div className={`flex-1 p-8 flex flex-col items-center overflow-y-auto grid-bg custom-scrollbar relative transition-colors ${
-        isDarkMode ? 'bg-gray-950' : 'bg-gray-100'
-      }`}>
+      <div className="flex-1 p-6 md:p-10 flex flex-col items-center overflow-y-auto custom-scrollbar bg-background relative">
         <div className="mb-4 flex items-center gap-4 no-print">
-           <div className={`px-4 py-1.5 rounded-full shadow-sm border text-xs font-bold flex items-center gap-2 transition-colors ${
-             isDarkMode 
-               ? 'bg-gray-900 border-gray-800 text-gray-400' 
-               : 'bg-white border-gray-200 text-gray-500'
-           }`}>
-             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+           <div className="px-4 py-1.5 rounded-full border border-border bg-surface text-xs font-medium text-muted flex items-center gap-2">
+             <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
              {t.builder.livePreview}
            </div>
-           <div className={`text-xs italic transition-colors ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+           <div className="text-xs italic text-muted">
              {t.builder.previewHint}
            </div>
         </div>
 
-        <div 
+        <div
           ref={previewRef}
-          className={`cv-page ${template === 'modern' || template === 'europass' || template === 'corporate' || template === 'creative' ? 'p-0' : 'p-12'} transition-all duration-300 ${
-            isDarkMode 
-              ? 'shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5' 
-              : 'shadow-[0_0_50px_rgba(0,0,0,0.08)] border border-gray-300'
-          }`}
+          className={`cv-page ${template === 'modern' || template === 'europass' || template === 'corporate' || template === 'creative' ? 'p-0' : 'p-12'}`}
         >
           {template === 'modern' ? (
             <ModernTemplate data={data} lang={lang} isDarkMode={isDarkMode} />
@@ -724,56 +633,43 @@ interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   icon?: LucideIcon;
   placeholder?: string;
-  isDarkMode?: boolean;
 }
 
-function InputField({ label, name, value, onChange, icon: Icon, placeholder, isDarkMode }: InputFieldProps) {
+function InputField({ label, name, value, onChange, icon: Icon, placeholder }: InputFieldProps) {
   return (
     <div className="space-y-1.5 flex-1">
-      <label className={`text-[10px] font-black uppercase tracking-wider ml-1 flex items-center gap-1.5 ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>
-        {Icon && <Icon size={12} className={isDarkMode ? 'text-primary-400' : 'text-primary-600'} />} {label}
+      <label className="text-xs font-medium uppercase tracking-[0.08em] text-muted flex items-center gap-1.5">
+        {Icon && <Icon size={12} className="text-accent" />} {label}
       </label>
-      <div className="relative group">
-        <input 
-          type="text"
-          name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          className={`w-full border rounded-xl px-4 py-3.5 text-sm outline-none transition-all font-medium shadow-sm ${
-            isDarkMode 
-              ? 'bg-gray-950 border-gray-800 text-white focus:ring-primary-500/20 focus:border-primary-500 placeholder:text-gray-600' 
-              : 'bg-white border-gray-300 text-gray-900 focus:ring-primary-100 focus:border-primary-500 placeholder:text-gray-400 hover:border-primary-400'
-          }`}
-        />
-      </div>
+      <input
+        type="text"
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full h-11 rounded-control border border-border bg-surface px-3.5 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/25"
+      />
     </div>
   );
 }
 
-function SectionHeader({ title, icon: Icon, onAdd, isDarkMode }: { title: string, icon: LucideIcon, onAdd?: () => void, isDarkMode: boolean }) {
+function SectionHeader({ title, icon: Icon, onAdd }: { title: string, icon: LucideIcon, onAdd?: () => void }) {
   return (
-    <div className="flex items-center justify-between group/header">
+    <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center group-hover/header:rotate-6 transition-transform ${
-          isDarkMode ? 'bg-primary-900/30 text-primary-400' : 'bg-primary-50 text-primary-600'
-        }`}>
+        <div className="flex h-8 w-8 items-center justify-center rounded-control bg-accent-tint text-accent">
           <Icon size={16} />
         </div>
-        <h3 className={`text-sm font-black uppercase tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+        <h3 className="text-sm font-semibold text-ink">
           {title}
         </h3>
       </div>
       {onAdd && (
-        <button 
-          onClick={onAdd} 
-          className={`p-1.5 rounded-lg transition-all shadow-md active:scale-95 ${
-            isDarkMode 
-              ? 'bg-primary-600 text-white hover:bg-primary-500'
-              : 'bg-primary-600 text-white hover:bg-primary-700'
-          }`}
+        <button
+          onClick={onAdd}
+          className="inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-control border border-border bg-surface text-ink text-xs font-semibold cursor-pointer transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-px"
         >
-          <Plus size={16} />
+          <Plus size={14} />
         </button>
       )}
     </div>
