@@ -1,14 +1,12 @@
 # Dossier Visual Redesign Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Replace CampusCV AI's entire visual identity with the approved "Dossier" editorial design (warm paper, ink, forest-green accent, Fraunces + IBM Plex Sans) across all app chrome, preserving every piece of existing functionality.
 
-**Architecture:** Tokens land first in `src/index.css` (semantic CSS variables flipped by `.dark`, mapped into Tailwind 4 `@theme` so utilities like `bg-surface`/`text-ink` exist). Component files are then rewritten className-by-className against those tokens — Landing, ResumeBuilder chrome, and JobBoard are independent and may run as parallel subagents after Tasks 1–2. A consistency audit and full visual verification close it out.
+**Architecture:** Tokens land first in `src/index.css` (semantic CSS variables flipped by `.dark`, mapped into Tailwind 4 `@theme` so utilities like `bg-surface`/`text-ink` exist). Component files are then rewritten className-by-className against those tokens — Landing, ResumeBuilder chrome, and JobBoard are independent and may run in parallel after Tasks 1–2. A consistency audit and full visual verification close it out.
 
 **Tech Stack:** React 19, Vite 6, Tailwind CSS 4 (CSS-first `@theme`), Framer Motion (`motion/react`), lucide-react, Express dev server (`npm run dev`, serves Vite middleware).
 
-**Spec:** `docs/superpowers/specs/2026-07-03-dossier-redesign-design.md` (read it before starting any task).
+**Spec:** `docs/design/specs/2026-07-03-dossier-redesign-design.md` (read it before starting any task).
 
 ## Global Constraints
 

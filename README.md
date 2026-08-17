@@ -104,7 +104,7 @@ one process serves both the API and the HMR front end.
 
 The visual work was done in two documented passes, kept under `docs/`:
 
-- `docs/superpowers/plans/2026-07-01-visual-redesign.md`
-- `docs/superpowers/plans/2026-07-03-dossier-redesign.md`
+- `docs/design/plans/2026-07-01-visual-redesign.md`
+- `docs/design/plans/2026-07-03-dossier-redesign.md`
 
-with the accompanying design specs in `docs/superpowers/specs/`.
+with the accompanying design specs in `docs/design/specs/`.

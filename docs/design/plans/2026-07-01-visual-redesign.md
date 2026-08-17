@@ -1,7 +1,5 @@
 # CampusCV AI Visual Redesign Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Restyle CampusCV AI's app chrome (nav/header, Landing, ResumeBuilder wizard chrome, JobBoard) from an inconsistent, startup-flashy visual language to a clean, professional "Trust Blue SaaS" look, without touching the 6-palette switcher's hue values, dark/light toggle logic, i18n structure, CV export templates, or any Phase-1 bug-fix behavior.
 
 **Architecture:** Pure presentational change — Tailwind class edits in JSX plus one font-import edit in `src/index.css`. No new components, no new state, no new dependencies. Each task edits one file end-to-end so it can be reviewed and verified independently.
@@ -10,7 +8,7 @@
 
 ## Global Constraints
 
-- Spec: `docs/superpowers/specs/2026-07-01-visual-redesign-design.md` — read it before starting if anything below is ambiguous.
+- Spec: `docs/design/specs/2026-07-01-visual-redesign-design.md` — read it before starting if anything below is ambiguous.
 - Do NOT change the 6 `.theme-*` palette hue values in `src/index.css` (classic/emerald/sunset/amethyst/crimson/cyber blocks) — only how components consume `primary-*` classes.
 - Do NOT touch the 10 CV export template functions in `ResumeBuilder.tsx` (`ModernTemplate` through `RetroTemplate`, roughly lines 780–1900) — only the wizard chrome above them.
 - Do NOT change i18n keys/structure, dark/light toggle logic, OAuth/API behavior, or any Phase-1 fix.
@@ -18,7 +16,7 @@
 - Remove every colored "glow" shadow (`shadow-primary-500/20`, `shadow-blue-100`, `shadow-blue-200`, `shadow-primary-950/40`, etc.) in favor of neutral `shadow-sm` (resting) / `shadow-md` (hover/elevated) / `shadow-lg` (modals — none in current scope).
 - Replace any hardcoded `blue-600`/`blue-700` class used for what is conceptually the *primary* brand color with `primary-600`/`primary-700` so it responds to the active palette. (Hardcoded `blue`/`emerald`/`violet`/`amber` used for genuinely decorative/semantic multi-color accents — e.g. Landing's 4-step color-per-card, JobBoard's stat card icon colors — are NOT primary-brand usages and stay as-is; only fix cases where blue is standing in for "the app's primary color".)
 - No test framework exists in this repo (`package.json` has no `test` script). "Verification" per task means: `npm run lint` (tsc) passes, `npm run build` passes, and a manual visual check in the browser (light + dark, at least 2 palettes, at least 2 languages) as described in each task's Verification step.
-- Working directory for all commands: `/Users/david/Desktop/CampusCV AI`. No git repo exists here (confirmed during brainstorming) — skip any `git commit` steps; just leave changes on disk.
+- Working directory for all commands: `/Users/david/Desktop/CampusCV AI`. No git repo exists here — skip any `git commit` steps; just leave changes on disk.
 
 ---
 
